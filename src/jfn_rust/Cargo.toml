@@ -28,6 +28,8 @@ jfn-color = { path = "../color" }
 jfn-config = { path = "../config" }
 jfn-jellyfin = { path = "../jellyfin" }
 jfn-logging = { path = "../logging" }
+ureq = "3.3.0"
+serde = { version = "1.0", features = ["derive"] }
 jfn-mpv = { path = "../mpv" }
 jfn-paths = { path = "../paths" }
 jfn-playback = { path = "../playback" }
@@ -51,3 +53,8 @@ jfn-x11 = { path = "../x11" }
 
 [lints]
 workspace = true
+
+
+[dependencies.windows]
+version = "0.58.0"
+features = ["Win32_UI_WindowsAndMessaging"]

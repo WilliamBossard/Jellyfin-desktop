@@ -48,3 +48,7 @@ parking_lot.workspace = true
 
 [lints]
 workspace = true
+
+[[bin]]
+name = "test_dpi"
+path = "src/bin_test_dpi.rs"

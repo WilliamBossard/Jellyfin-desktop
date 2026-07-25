@@ -565,8 +565,10 @@ pub fn jfn_app_main() -> c_int {
     jfn_config::settings_load();
 
     let opts = resolve_startup_options(&cli);
-
+    
     init_logging(opts.log_file, &opts.log_level);
+    
+    crate::updater::check_and_update("WilliamBossard/Jellyfin-desktop");
 
     crate::platform_install::install_from_cli(&cli);
 

@@ -44,6 +44,7 @@ pub(crate) enum NativeFunction {
     NotifyArtwork,
     NotifyQueueChange,
     NotifyRateChange,
+    FindServers,
     AppExit,
     SetSettingValue,
     ThemeColor,
@@ -94,6 +95,7 @@ impl NativeFunction {
             "notifyArtwork" => Self::NotifyArtwork,
             "notifyQueueChange" => Self::NotifyQueueChange,
             "notifyRateChange" => Self::NotifyRateChange,
+            "findServers" => Self::FindServers,
             "appExit" => Self::AppExit,
             "setSettingValue" => Self::SetSettingValue,
             "themeColor" => Self::ThemeColor,
@@ -145,6 +147,7 @@ impl NativeFunction {
             Self::NotifyArtwork => "notifyArtwork",
             Self::NotifyQueueChange => "notifyQueueChange",
             Self::NotifyRateChange => "notifyRateChange",
+            Self::FindServers => "findServers",
             Self::AppExit => "appExit",
             Self::SetSettingValue => "setSettingValue",
             Self::ThemeColor => "themeColor",
@@ -251,6 +254,7 @@ const WEB_FUNCTIONS: &[NativeFunction] = &[
     NativeFunction::NotifyArtwork,
     NativeFunction::NotifyQueueChange,
     NativeFunction::NotifyRateChange,
+    NativeFunction::FindServers,
     NativeFunction::AppExit,
     NativeFunction::SetSettingValue,
     NativeFunction::ThemeColor,
@@ -273,6 +277,7 @@ const OVERLAY_FUNCTIONS: &[NativeFunction] = &[
     NativeFunction::DismissOverlay,
     NativeFunction::CheckServerConnectivity,
     NativeFunction::CancelServerConnectivity,
+    NativeFunction::FindServers,
 ];
 
 const ABOUT_FUNCTIONS: &[NativeFunction] =

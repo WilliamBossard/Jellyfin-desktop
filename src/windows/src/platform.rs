@@ -24,6 +24,7 @@ use windows::Win32::UI::WindowsAndMessaging::{
     GetWindowThreadProcessId, HHOOK, IsIconic, IsZoomed, SIZE_MINIMIZED, SPI_GETWORKAREA,
     SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS, SetWindowsHookExW, SystemParametersInfoW,
     UnhookWindowsHookEx, WH_CALLWNDPROCRET, WM_CLOSE, WM_SIZE, WS_CAPTION, WS_THICKFRAME,
+    WM_DPICHANGED,
 };
 
 use jfn_mpv::api::{
@@ -289,6 +290,11 @@ unsafe extern "system" fn mpv_wndproc_hook(n_code: c_int, wp: WPARAM, lp: LPARAM
                         ph,
                         fs_changed || recovering_from_minimize,
                     );
+                }
+            } else if msg.message == WM_DPICHANGED {
+                let dpi = (msg.wParam.0 & 0xFFFF) as u32;
+                if dpi > 0 {
+                    STATE.lock().cached_scale = dpi as f32 / 96.0;
                 }
             } else if msg.message == WM_CLOSE {
                 jfn_shutdown_initiate();

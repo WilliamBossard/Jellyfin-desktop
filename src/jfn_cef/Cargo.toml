@@ -29,3 +29,7 @@ gix = { workspace = true }
 
 [lints]
 workspace = true
+
+[[bin]]
+name = "test_menu"
+path = "src/bin_test_menu.rs"

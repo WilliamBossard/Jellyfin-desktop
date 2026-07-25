@@ -1,6 +1,6 @@
 use cef::rc::Rc;
 use cef::{
-    EventFlags, ImplRunContextMenuCallback, ImplTask, MenuId, RunContextMenuCallback, Task,
+    ImplBrowser, ImplRunContextMenuCallback, ImplTask, MenuId, RunContextMenuCallback, Task,
     ThreadId, WrapTask, post_task, wrap_task,
 };
 use std::os::raw::{c_int, c_void};
@@ -28,10 +28,21 @@ impl Inner {
             return;
         }
         let pending = self.take_pending_menu_callback();
-        // Ids below USER_FIRST are CEF built-in commands; only cont() executes them.
+        // Ids below USER_FIRST are CEF built-in commands.
+        // Calling cb.cont() asynchronously after JS menu dismissal often fails
+        // to execute edit commands due to focus loss. Execute them manually.
         if id >= 0 && id < MenuId::USER_FIRST.get_raw() as c_int {
             if let Some(cb) = pending {
-                cb.cont(id, EventFlags::default());
+                cb.cancel();
+            }
+            if id == MenuId::UNDO.get_raw() as c_int { self.frame_undo(); }
+            else if id == MenuId::REDO.get_raw() as c_int { self.frame_redo(); }
+            else if id == MenuId::CUT.get_raw() as c_int { self.frame_cut(); }
+            else if id == MenuId::COPY.get_raw() as c_int { self.frame_copy(); }
+            else if id == MenuId::PASTE.get_raw() as c_int { self.frame_paste(); }
+            else if id == MenuId::SELECT_ALL.get_raw() as c_int { self.frame_select_all(); }
+            else if id == MenuId::RELOAD.get_raw() as c_int {
+                if let Some(b) = self.browser_clone() { b.reload(); }
             }
             return;
         }

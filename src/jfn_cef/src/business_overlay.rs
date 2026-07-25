@@ -100,6 +100,22 @@ fn handle_message(message: BrowserMessage) -> bool {
     let args = message.args();
 
     match message.name() {
+        "findServers" => {
+            let timeout_ms = args.map_or(1000, |a| crate::ipc::list_int(a, 0) as u64);
+            if let Some(frame) = message.main_frame() {
+                std::thread::spawn(move || {
+                    let servers = jfn_jellyfin::discovery::discover_servers(timeout_ms);
+                    let json = serde_json::to_string(&servers).unwrap_or_else(|_| "[]".to_string());
+                    let js = format!("window._nativeFindServersResult({});", json);
+                    frame.execute_java_script(
+                        Some(&cef::CefString::from(js.as_str())),
+                        Some(&cef::CefString::from("overlay.js")),
+                        0,
+                    );
+                });
+            }
+            true
+        }
         "getSavedServerUrl" => {
             let Some(frame) = message.main_frame() else {
                 return true;

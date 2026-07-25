@@ -145,6 +145,8 @@ fn apply_defaults(
     set("stop-screensaver", "no")?;
     set("keepaspect-window", "no")?;
     set("auto-window-resize", "no")?;
+    
+    set("save-position-on-quit", "no")?;
     // Suppress the server-side decoration request on Wayland when the app
     // draws its own client-side decorations; otherwise a compositor titlebar
     // (e.g. KDE) would stack on top of ours.

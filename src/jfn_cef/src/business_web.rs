@@ -20,6 +20,7 @@ use crate::browsers::{jfn_browsers_active, jfn_browsers_set_active};
 use crate::business_common::{apply_setting_value, js_cstr_or_warn, reject_double_init};
 use crate::client::{Inner, JfnCefLayer, jfn_cef_layer_inner, jfn_cef_layer_set_name};
 use crate::ipc::{BrowserMessage, list_int, list_opt_string, list_string};
+use cef::ImplFrame;
 use jfn_color::jfn_cef_parse_color;
 use jfn_color::theme::{jfn_theme_color_on_color, jfn_theme_color_set_video_mode};
 use jfn_mpv::api::{
@@ -276,6 +277,23 @@ fn with_args(args: Option<&ListValue>, f: impl FnOnce(&ListValue)) -> bool {
 
 fn handle_message(message: BrowserMessage) -> bool {
     let args = message.args();
+
+    if message.name() == "findServers" {
+        let timeout_ms = args.map_or(1000, |a| crate::ipc::list_int(a, 0) as u64);
+        if let Some(frame) = message.main_frame() {
+            std::thread::spawn(move || {
+                let servers = jfn_jellyfin::discovery::discover_servers(timeout_ms);
+                let json = serde_json::to_string(&servers).unwrap_or_else(|_| "[]".to_string());
+                let js = format!("window._nativeFindServersResult('{}');", json);
+                frame.execute_java_script(
+                    Some(&cef::CefString::from(js.as_str())),
+                    Some(&cef::CefString::from("native-shim.js")),
+                    0,
+                );
+            });
+        }
+        return true;
+    }
 
     // mpv handle not yet initialised — return false so CEF treats the message as unhandled.
     if jfn_mpv_handle_get().is_null() {

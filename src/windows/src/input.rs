@@ -417,9 +417,14 @@ unsafe extern "system" fn input_wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LP
         }
 
         WM_CHAR | WM_SYSCHAR => {
+            let mut mods = keyboard_modifiers(wp, lp);
+            if (mods & EVENTFLAG_CONTROL_DOWN) != 0 && (mods & EVENTFLAG_ALT_DOWN) != 0 {
+                mods &= !EVENTFLAG_CONTROL_DOWN;
+                mods &= !EVENTFLAG_ALT_DOWN;
+            }
             jfn_input_dispatch_char_sys(
                 wp.0 as u32,
-                keyboard_modifiers(wp, lp),
+                mods,
                 lp.0 as u32,
                 if msg == WM_SYSCHAR { 1 } else { 0 },
             );

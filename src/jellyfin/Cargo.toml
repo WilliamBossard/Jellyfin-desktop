@@ -10,6 +10,16 @@ crate-type = ["rlib"]
 
 [dependencies]
 serde_json = { workspace = true, features = ["preserve_order"] }
+serde = { version = "1", features = ["derive"] }
+tracing = { workspace = true }
 
 [lints]
 workspace = true
+
+[[bin]]
+name = "test_discovery"
+path = "src/bin_test_discovery.rs"
+
+[[bin]]
+name = "test_json"
+path = "src/bin_test_json.rs"
