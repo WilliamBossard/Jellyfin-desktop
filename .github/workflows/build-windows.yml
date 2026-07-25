@@ -69,16 +69,8 @@ jobs:
       - name: Build and package
         shell: cmd
         env:
-          # bindgen (used by jfn-mpv's build.rs) dlopens libclang at
-          # build time. The mingw-w64-clang-*-llvm package ships
-          # libclang.dll under the msystem prefix's bin/; cmd.exe
-          # doesn't pick that up from setup-msys2, so point bindgen
-          # at it explicitly.
           LIBCLANG_PATH: C:\msys64\${{ matrix.msystem }}\bin
           MSYS_BIN: C:\msys64\${{ matrix.msystem }}\bin
-          # mingw's libclang doesn't auto-pick the MSVC target triple, so
-          # MSVC's arch-specific headers (__int64, vcruntime intrinsics,
-          # etc.) get parsed against the wrong default target. Pin it.
           BINDGEN_EXTRA_CLANG_ARGS: --target=${{ matrix.triple }}
           MATRIX_ARCH: ${{ matrix.arch }}
         run: |
@@ -86,9 +78,16 @@ jobs:
           call "%VSINSTALL%\VC\Auxiliary\Build\vcvarsall.bat" %MATRIX_ARCH% || exit /b 1
           set "PATH=%PATH%;%MSYS_BIN%"
           cargo xtask package --external-mpv "%CD%\third_party\mpv-install" --prefix build/install --dist dist
+          powershell -ExecutionPolicy Bypass -File build_installer.ps1
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@v4
         with:
-          name: windows-${{ matrix.arch }}
-          path: dist/JelliumDesktop-*.zip
+          name: windows-${{ matrix.arch }}-installer
+          path: build/Jellyfin-Desktop-Setup.exe
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: build/Jellyfin-Desktop-Setup.exe

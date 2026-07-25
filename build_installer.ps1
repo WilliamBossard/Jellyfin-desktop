@@ -18,12 +18,13 @@ if (-not $ISCC) {
     exit 1
 }
 
-# Write-Host "Using Inno Setup Compiler: $ISCC"
-# & $ISCC "installer.iss"
+Write-Host "Using Inno Setup Compiler: $ISCC"
+& $ISCC "installer.iss"
 #
-# if ($LASTEXITCODE -eq 0) {
-#     Write-Host "Installer created successfully in the 'build' directory!" -ForegroundColor Green
-# } else {
-#     Write-Host "Failed to create installer." -ForegroundColor Red
-#     exit $LASTEXITCODE
-# }
+if ($LASTEXITCODE -eq 0) {
+    Write-Host "Installer created successfully in the 'build' directory!" -ForegroundColor Green
+} else {
+    Write-Host "Failed to create installer." -ForegroundColor Red
+    exit $LASTEXITCODE
+}
+

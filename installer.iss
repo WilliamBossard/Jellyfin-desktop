@@ -14,7 +14,7 @@ ArchitecturesInstallIn64BitMode=x64
 Name: "desktopicon"; Description: "Créer un raccourci sur le bureau"; GroupDescription: "Raccourcis additionnels :"
 
 [Files]
-Source: "build\*"; Excludes: "*.pdb,*.log,mpv-build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "build\install\*"; Excludes: "*.pdb,*.log,mpv-build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 
 [Icons]
 Name: "{group}\Jellyfin Desktop"; Filename: "{app}\jellium-desktop.exe"
@@ -22,3 +22,4 @@ Name: "{autodesktop}\Jellyfin Desktop"; Filename: "{app}\jellium-desktop.exe"; T
 
 [Run]
 Filename: "{app}\jellium-desktop.exe"; Description: "Lancer Jellyfin Desktop"; Flags: nowait postinstall skipifsilent
+
