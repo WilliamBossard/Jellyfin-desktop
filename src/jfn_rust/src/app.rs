@@ -332,10 +332,15 @@ fn publish_device_profile(mpv_raw: *mut jfn_mpv::sys::mpv_handle) {
             },
         })
         .collect();
+    let mut demuxers = caps.demuxers;
+    // mpv can hang indefinitely when probing some mpegts/m2ts files over HTTP.
+    // Filtering them out forces the server to remux to fmp4/hls.
+    demuxers.retain(|d| d != "mpegts" && d != "m2ts" && d != "ts");
+
     let force = jfn_config::force_transcoding();
     let profile = jfn_jellyfin::build_device_profile(
         &decoders,
-        &caps.demuxers,
+        &demuxers,
         "Jellium Desktop",
         APP_VERSION_FULL,
         force,

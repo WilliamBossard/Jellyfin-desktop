@@ -23,7 +23,11 @@ pub fn cef_cache_dir() -> PathBuf {
 }
 
 pub fn cargo_target_dir(out: &std::path::Path) -> PathBuf {
-    out.join("cargo-target")
+    if let Ok(dir) = std::env::var("CARGO_TARGET_DIR") {
+        PathBuf::from(dir)
+    } else {
+        out.join("cargo-target")
+    }
 }
 
 pub fn mpv_build_dir(out: &std::path::Path) -> PathBuf {

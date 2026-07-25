@@ -26,3 +26,9 @@ run *args: build
 [windows]
 run-mpv *args: build
     & 'build/mpv-build/mpv.exe' {{args}}
+
+# Build Windows Installer
+[group('build')]
+[windows]
+installer: build
+    & '.\build_installer.ps1'

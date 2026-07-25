@@ -298,9 +298,10 @@ unsafe extern "system" fn input_wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LP
         }
 
         WM_MOUSEMOVE => {
+            let scale = crate::win_get_scale();
             jfn_input_dispatch_mouse_move(
-                get_x_lparam(lp),
-                get_y_lparam(lp),
+                (get_x_lparam(lp) as f32 / scale).round() as i32,
+                (get_y_lparam(lp) as f32 / scale).round() as i32,
                 mouse_modifiers(wp),
                 0,
             );
@@ -318,11 +319,12 @@ unsafe extern "system" fn input_wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LP
             if down {
                 let _ = unsafe { SetFocus(Some(hwnd)) };
             }
+            let scale = crate::win_get_scale();
             jfn_input_dispatch_mouse_button(
                 msg_to_button_code(msg),
                 if down { 1 } else { 0 },
-                get_x_lparam(lp),
-                get_y_lparam(lp),
+                (get_x_lparam(lp) as f32 / scale).round() as i32,
+                (get_y_lparam(lp) as f32 / scale).round() as i32,
                 mouse_modifiers(wp),
             );
             return LRESULT(0);
@@ -358,8 +360,13 @@ unsafe extern "system" fn input_wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LP
             unsafe {
                 let _ = ScreenToClient(hwnd, &mut pt);
             }
+            let scale = crate::win_get_scale();
             let delta = hiword_i16(wp.0 as u32) as i32;
-            jfn_input_dispatch_scroll(pt.x, pt.y, 0, delta, mouse_modifiers(wp));
+            jfn_input_dispatch_scroll(
+                (pt.x as f32 / scale).round() as i32, 
+                (pt.y as f32 / scale).round() as i32, 
+                0, delta, mouse_modifiers(wp)
+            );
             return LRESULT(0);
         }
 
@@ -371,8 +378,13 @@ unsafe extern "system" fn input_wndproc(hwnd: HWND, msg: u32, wp: WPARAM, lp: LP
             unsafe {
                 let _ = ScreenToClient(hwnd, &mut pt);
             }
+            let scale = crate::win_get_scale();
             let delta = hiword_i16(wp.0 as u32) as i32;
-            jfn_input_dispatch_scroll(pt.x, pt.y, delta, 0, mouse_modifiers(wp));
+            jfn_input_dispatch_scroll(
+                (pt.x as f32 / scale).round() as i32, 
+                (pt.y as f32 / scale).round() as i32, 
+                delta, 0, mouse_modifiers(wp)
+            );
             return LRESULT(0);
         }
 
