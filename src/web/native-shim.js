@@ -96,6 +96,10 @@
     }
 
     const _savedSettings = JSON.parse('__SETTINGS_JSON__');
+    
+    if (!localStorage.getItem('displaylanguage') || localStorage.getItem('displaylanguage') === 'auto') {
+        localStorage.setItem('displaylanguage', _savedSettings.sysLocale || 'auto');
+    }
 
     window.jmpInfo = {
         version: '__APP_VERSION__',

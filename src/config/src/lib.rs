@@ -264,6 +264,7 @@ impl SettingsData {
         // windowDecorations is absent: resolving its effective value needs the
         // Platform default, unavailable in the CEF renderer where cli_json runs.
         o.insert("hideScrollbar".into(), Value::Bool(self.hide_scrollbar));
+        o.insert("sysLocale".into(), Value::String(sys_locale::get_locale().unwrap_or_else(|| "en-US".to_string())));
         if !self.device_name.is_empty() {
             o.insert("deviceName".into(), Value::String(self.device_name.clone()));
         }
