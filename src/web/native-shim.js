@@ -1,4 +1,35 @@
 (function() {
+    const originalSetItem = localStorage.setItem;
+    localStorage.setItem = function(key, value) {
+        console.debug('[LocalStorage SetItem] key:', key, 'value:', value);
+        originalSetItem.apply(this, arguments);
+        if ((key === 'servers' || key === 'jellyfin_credentials') && window.jmpNative && window.jmpNative.saveServerUrl) {
+            try {
+                let parsed = JSON.parse(value);
+                let currentServer = "";
+                if (key === 'servers' && Array.isArray(parsed)) {
+                    currentServer = parsed.length > 0 ? (parsed[0].Url || parsed[0].Id || parsed[0].ManualAddress || parsed[0].LocalAddress) : "";
+                } else if (key === 'jellyfin_credentials' && parsed && Array.isArray(parsed.Servers)) {
+                    currentServer = parsed.Servers.length > 0 ? (parsed.Servers[0].ManualAddress || parsed.Servers[0].LocalAddress || parsed.Servers[0].Url) : "";
+                }
+                if (currentServer) {
+                    window.jmpNative.saveServerUrl(currentServer);
+                } else if (parsed.length === 0 || (parsed.Servers && parsed.Servers.length === 0)) {
+                    window.jmpNative.saveServerUrl("");
+                }
+            } catch (e) {}
+        }
+    };
+    const originalRemoveItem = localStorage.removeItem;
+    localStorage.removeItem = function(key) {
+        console.debug('[LocalStorage RemoveItem] key:', key);
+        originalRemoveItem.apply(this, arguments);
+        if ((key === 'servers' || key === 'jellyfin_credentials') && window.jmpNative && window.jmpNative.saveServerUrl) {
+            window.jmpNative.saveServerUrl("");
+        }
+    };
+})();
+(function() {
     console.debug('[Media] Installing native shim...');
 
     window._isFullscreen = false;
@@ -480,50 +511,69 @@
         }
     });
 
-    window._nativeFindServersResult = function(json) {
-        let servers = [];
-        try { servers = JSON.parse(json); } catch (e) { return; }
-        if (!servers || servers.length === 0) return;
+    window._nativeFindServersResult = function(servers) {
+        if (!servers || !Array.isArray(servers) || servers.length === 0) return;
         
         let container = document.getElementById('jellium-discovery-container');
-        if (!container) {
-            let anchor = document.querySelector('.manualServerConnection') || document.querySelector('form');
-            if (!anchor) return;
+        if (container) container.remove();
+        
+        let anchor = document.querySelector('.page:not(.hide) .manualServerConnection') || document.querySelector('.page:not(.hide) form');
+        if (!anchor) return;
+        
+        console.info('[Discovery] Anchor HTML: ' + anchor.outerHTML);
 
-            container = document.createElement('div');
-            container.id = 'jellium-discovery-container';
-            container.style.marginTop = '20px';
-            container.style.padding = '10px';
-            container.style.background = 'rgba(0,0,0,0.2)';
-            container.style.borderRadius = '8px';
-            container.innerHTML = '<h3 style="margin-bottom:10px;font-size:1.1em;">Serveurs détectés sur le réseau :</h3><div id="jellium-discovery-list" style="display:flex;flex-direction:column;gap:10px;"></div>';
-            anchor.parentNode.insertBefore(container, anchor.nextSibling);
-        }
+        container = document.createElement('div');
+        container.id = 'jellium-discovery-container';
+        container.style.marginTop = '40px';
+        container.style.width = '100%';
+        container.innerHTML = '<h3 style="color:#ddd; margin-bottom:15px; font-weight:normal; font-size:1.1em; text-align:center;">Serveurs d\u00E9tect\u00E9s</h3><div id="jellium-discovery-list" style="display:flex;flex-direction:column;gap:15px;align-items:center;"></div>';
+        
+        // Always append inside the anchor.
+        anchor.appendChild(container);
 
         const list = document.getElementById('jellium-discovery-list');
         list.innerHTML = '';
         
-        // Vérifier si le serveur est déjà dans le localStorage (Jellyfin stocke les serveurs sous "servers")
-        let savedServersString = localStorage.getItem("servers") || "";
-        // Et vérifier le texte de la page pour les serveurs déjà affichés
-        const bodyText = document.body.innerText;
-        
         servers.forEach(s => {
-            if (savedServersString.includes(s.Address) || bodyText.includes(s.Address) || bodyText.includes(s.Name)) {
-                return; // Déjà enregistré ou affiché
-            }
-            const btn = document.createElement('button');
-            btn.className = 'btn raised block button-submit'; // Classes Jellyfin
-            btn.style.backgroundColor = '#00a4dc';
-            btn.style.color = '#fff';
-            btn.style.padding = '10px';
-            btn.style.borderRadius = '5px';
-            btn.style.border = 'none';
-            btn.style.cursor = 'pointer';
+            const btn = document.createElement('div');
             btn.style.width = '100%';
-            btn.style.textAlign = 'center';
-            btn.style.fontSize = '1em';
-            btn.innerText = s.Name + ' (' + s.Address + ')';
+            btn.style.maxWidth = '450px';
+            btn.style.backgroundColor = '#292929';
+            btn.style.padding = '1em';
+            btn.style.border = '0.16em solid transparent';
+            btn.style.borderRadius = '0.2em';
+            btn.style.cursor = 'pointer';
+            btn.style.display = 'flex';
+            btn.style.flexDirection = 'column';
+            btn.style.transition = 'background 0.15s ease-in-out';
+            btn.style.boxSizing = 'border-box';
+            
+            // Hover effect matching .server-card:hover
+            btn.onmouseenter = () => {
+                btn.style.backgroundColor = '#333333';
+                btn.style.borderColor = '#00a4dc';
+            };
+            btn.onmouseleave = () => {
+                btn.style.backgroundColor = '#292929';
+                btn.style.borderColor = 'transparent';
+            };
+            
+            const title = document.createElement('div');
+            title.innerText = s.Name;
+            title.style.fontSize = '1.1em';
+            title.style.fontWeight = '500';
+            title.style.color = '#fff';
+            title.style.marginBottom = '0.25em';
+            title.style.textAlign = 'left';
+            
+            const subtitle = document.createElement('div');
+            subtitle.innerText = s.Address;
+            subtitle.style.fontSize = '0.9em';
+            subtitle.style.color = 'rgba(255, 255, 255, 0.5)';
+            subtitle.style.textAlign = 'left';
+            
+            btn.appendChild(title);
+            btn.appendChild(subtitle);
             btn.onclick = (e) => {
                 e.preventDefault();
                 if (window.jmpNative && window.jmpNative.saveServerUrl) {
@@ -541,48 +591,116 @@
         }
     };
 
-    let discoveryTimer = null;
-    function checkUrlForSelectServer(url) {
-        if (!url) return;
-        if (url.includes('selectserver') && window.jmpNative && window.jmpNative.findServers) {
-            if (discoveryTimer) clearInterval(discoveryTimer);
-            discoveryTimer = setInterval(() => {
-                let anchor = document.querySelector('.manualServerConnection') || document.querySelector('form');
-                if (anchor) {
-                    clearInterval(discoveryTimer);
-                    discoveryTimer = null;
-                    window.jmpNative.findServers();
-                }
-            }, 500);
-        } else {
-            if (discoveryTimer) {
-                clearInterval(discoveryTimer);
-                discoveryTimer = null;
-            }
+    (function() {
+        function injectDiscoveryList() {
+            if (!window.jmpNative || !window.jmpNative.findServers) return;
+            // Only inject on the add server page
+            if (!window.location.hash.includes('addserver') && !window.location.pathname.includes('addserver')) return;
+            
+            const form = document.querySelector('.page:not(.hide) .manualServerConnection') || document.querySelector('.page:not(.hide) form');
+            if (!form) return;
+            
+            // Remove any existing one to prevent duplicates during re-renders
+            const existing = document.getElementById('jellium-discovery-container');
+            if (existing) existing.remove();
+
+            console.log('[Discovery] Triggering findServers for form injection');
+            window.jmpNative.findServers(1000);
         }
-    }
 
-    const originalPushState = history.pushState;
-    history.pushState = function() {
-        originalPushState.apply(this, arguments);
-        checkUrlForSelectServer(window.location.hash || window.location.pathname);
+        const observer = new MutationObserver((mutations) => {
+            // Check if we are on the add server page specifically
+            if (window.location.hash.includes('addserver') || window.location.pathname.includes('addserver')) {
+                // To avoid an infinite loop if findServers returns immediately and injects,
+                // we only inject if the container isn't there yet.
+                if (!document.getElementById('jellium-discovery-container')) {
+                    injectDiscoveryList();
+                }
+            }
+        });
+
+        observer.observe(document.documentElement || document, { childList: true, subtree: true });
+        
+        injectDiscoveryList();
+    })();
+
+    window._nativeUpdateInfoResult = function(version, downloadUrl, assetName) {
+        if (document.getElementById('jfn-update-dialog')) return;
+
+        const dialog = document.createElement('div');
+        dialog.id = 'jfn-update-dialog';
+        dialog.style.position = 'fixed';
+        dialog.style.top = '0';
+        dialog.style.left = '0';
+        dialog.style.width = '100vw';
+        dialog.style.height = '100vh';
+        dialog.style.backgroundColor = 'rgba(0, 0, 0, 0.6)';
+        dialog.style.display = 'flex';
+        dialog.style.alignItems = 'center';
+        dialog.style.justifyContent = 'center';
+        dialog.style.zIndex = '999999';
+        
+        const box = document.createElement('div');
+        box.style.backgroundColor = 'rgba(28, 28, 28, 0.95)';
+        box.style.padding = '2rem';
+        box.style.borderRadius = '12px';
+        box.style.maxWidth = '400px';
+        box.style.textAlign = 'center';
+        box.style.color = 'white';
+        box.style.boxShadow = '0 10px 30px rgba(0,0,0,0.5)';
+        box.style.fontFamily = 'sans-serif';
+        box.style.border = '1px solid rgba(255,255,255,0.1)';
+
+        const title = document.createElement('h2');
+        title.innerText = 'Mise \u00E0 jour disponible';
+        title.style.margin = '0 0 1rem 0';
+        
+        const desc = document.createElement('p');
+        desc.innerText = `La version ${version} est maintenant disponible !\nVoulez-vous la t\u00E9l\u00E9charger ?`;
+        desc.style.margin = '0 0 2rem 0';
+        desc.style.lineHeight = '1.5';
+
+        const btnRow = document.createElement('div');
+        btnRow.style.display = 'flex';
+        btnRow.style.gap = '1rem';
+        btnRow.style.justifyContent = 'center';
+
+        const btnYes = document.createElement('button');
+        btnYes.innerText = 'T\u00E9l\u00E9charger';
+        btnYes.style.padding = '10px 20px';
+        btnYes.style.background = '#00a4dc';
+        btnYes.style.color = 'white';
+        btnYes.style.border = 'none';
+        btnYes.style.borderRadius = '6px';
+        btnYes.style.cursor = 'pointer';
+        btnYes.style.fontWeight = 'bold';
+        btnYes.onclick = () => {
+            if (window.api && window.api.system) {
+                window.api.system.openExternalUrl(downloadUrl);
+            }
+            dialog.remove();
+        };
+
+        const btnNo = document.createElement('button');
+        btnNo.innerText = 'Plus tard';
+        btnNo.style.padding = '10px 20px';
+        btnNo.style.background = 'rgba(255,255,255,0.1)';
+        btnNo.style.color = 'white';
+        btnNo.style.border = 'none';
+        btnNo.style.borderRadius = '6px';
+        btnNo.style.cursor = 'pointer';
+        btnNo.onclick = () => dialog.remove();
+
+        btnRow.appendChild(btnNo);
+        btnRow.appendChild(btnYes);
+        
+        box.appendChild(title);
+        box.appendChild(desc);
+        box.appendChild(btnRow);
+        dialog.appendChild(box);
+        
+        document.body.appendChild(dialog);
     };
-
-    const originalReplaceState = history.replaceState;
-    history.replaceState = function() {
-        originalReplaceState.apply(this, arguments);
-        checkUrlForSelectServer(window.location.hash || window.location.pathname);
-    };
-
-    window.addEventListener('hashchange', () => {
-        checkUrlForSelectServer(window.location.hash);
-    });
-
-    window.addEventListener('popstate', () => {
-        checkUrlForSelectServer(window.location.hash || window.location.pathname);
-    });
-
-    checkUrlForSelectServer(window.location.hash || window.location.pathname);
 
     console.debug('[Media] Native shim installed');
 })();

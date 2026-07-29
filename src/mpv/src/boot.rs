@@ -1,4 +1,4 @@
-//! End-to-end mpv handle bring-up: create, apply defaults + per-arg
+﻿//! End-to-end mpv handle bring-up: create, apply defaults + per-arg
 //! options, initialize, and set log level — exposed as a single
 //! `jfn_mpv_handle_init` entry point.
 //!
@@ -152,8 +152,8 @@ fn apply_defaults(
     // (e.g. KDE) would stack on top of ours.
     let suppress_ssd = display == DisplayBackend::Wayland && client_side_decorations;
     set("border", if suppress_ssd { "no" } else { "yes" })?;
-    set("title", "Jellium Desktop")?;
-    set("wayland-app-id", "net.nullsum.JelliumDesktop")?;
+    set("title", "Jellyfin Desktop")?;
+    set("wayland-app-id", "net.nullsum.JellyfinDesktop")?;
 
     // Keep window open when idle. `force-window=yes` (not "immediate")
     // avoids a macOS deadlock: "immediate" calls handle_force_window

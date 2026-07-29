@@ -1,4 +1,4 @@
-// Translations from jellyfin-web/src/strings/
+﻿// Translations from jellyfin-web/src/strings/
 // Generated with:
 // jq -n '[inputs | { lang: input_filename | split(".")[0], HeaderConnectToServer: .HeaderConnectToServer, LabelServerHost: .LabelServerHost, LabelServerHostHelp: .LabelServerHostHelp, Connect: .Connect, HeaderConnectionFailure: .HeaderConnectionFailure, MessageUnableToConnectToServer: .MessageUnableToConnectToServer, ButtonGotIt: .ButtonGotIt }]' *.json
 
@@ -15,13 +15,13 @@ const languages = [
   },
   {
     "lang": "ar",
-    "HeaderConnectToServer": "اتصل إلى الخادم",
-    "LabelServerHost": "المضيف",
-    "LabelServerHostHelp": "192.168.1.100:8096 أو https://myserver.com",
-    "Connect": "إتصال",
-    "HeaderConnectionFailure": "فشل في الاتصال",
-    "MessageUnableToConnectToServer": "لم نستطع الاتصال إلى الخادم المختار في الوقت الحالي. الرجاء التأكد من أنه يعمل ثم المحاولة مرة أخرى.",
-    "ButtonGotIt": "حسنا"
+    "HeaderConnectToServer": "Ø§ØªØµÙ„ Ø¥Ù„Ù‰ Ø§Ù„Ø®Ø§Ø¯Ù…",
+    "LabelServerHost": "Ø§Ù„Ù…Ø¶ÙŠÙ",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ø£Ùˆ https://myserver.com",
+    "Connect": "Ø¥ØªØµØ§Ù„",
+    "HeaderConnectionFailure": "ÙØ´Ù„ ÙÙŠ Ø§Ù„Ø§ØªØµØ§Ù„",
+    "MessageUnableToConnectToServer": "Ù„Ù… Ù†Ø³ØªØ·Ø¹ Ø§Ù„Ø§ØªØµØ§Ù„ Ø¥Ù„Ù‰ Ø§Ù„Ø®Ø§Ø¯Ù… Ø§Ù„Ù…Ø®ØªØ§Ø± ÙÙŠ Ø§Ù„ÙˆÙ‚Øª Ø§Ù„Ø­Ø§Ù„ÙŠ. Ø§Ù„Ø±Ø¬Ø§Ø¡ Ø§Ù„ØªØ£ÙƒØ¯ Ù…Ù† Ø£Ù†Ù‡ ÙŠØ¹Ù…Ù„ Ø«Ù… Ø§Ù„Ù…Ø­Ø§ÙˆÙ„Ø© Ù…Ø±Ø© Ø£Ø®Ø±Ù‰.",
+    "ButtonGotIt": "Ø­Ø³Ù†Ø§"
   },
   {
     "lang": "as",
@@ -35,23 +35,23 @@ const languages = [
   },
   {
     "lang": "be-by",
-    "HeaderConnectToServer": "Падлучыцца да сервера",
-    "LabelServerHost": "Вядучы",
-    "LabelServerHostHelp": "192.168.1.100:8096 або https://myserver.com",
-    "Connect": "Падлучыцца",
-    "HeaderConnectionFailure": "Збой падлучэння",
-    "MessageUnableToConnectToServer": "Мы не можам зараз падключыцца да выбранага сервера. Упэўніцеся, што ён запушчаны, і паўтарыце спробу.",
-    "ButtonGotIt": "Зразумела"
+    "HeaderConnectToServer": "ÐŸÐ°Ð´Ð»ÑƒÑ‡Ñ‹Ñ†Ñ†Ð° Ð´Ð° ÑÐµÑ€Ð²ÐµÑ€Ð°",
+    "LabelServerHost": "Ð’ÑÐ´ÑƒÑ‡Ñ‹",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ð°Ð±Ð¾ https://myserver.com",
+    "Connect": "ÐŸÐ°Ð´Ð»ÑƒÑ‡Ñ‹Ñ†Ñ†Ð°",
+    "HeaderConnectionFailure": "Ð—Ð±Ð¾Ð¹ Ð¿Ð°Ð´Ð»ÑƒÑ‡ÑÐ½Ð½Ñ",
+    "MessageUnableToConnectToServer": "ÐœÑ‹ Ð½Ðµ Ð¼Ð¾Ð¶Ð°Ð¼ Ð·Ð°Ñ€Ð°Ð· Ð¿Ð°Ð´ÐºÐ»ÑŽÑ‡Ñ‹Ñ†Ñ†Ð° Ð´Ð° Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð°Ð³Ð° ÑÐµÑ€Ð²ÐµÑ€Ð°. Ð£Ð¿ÑÑžÐ½Ñ–Ñ†ÐµÑÑ, ÑˆÑ‚Ð¾ Ñ‘Ð½ Ð·Ð°Ð¿ÑƒÑˆÑ‡Ð°Ð½Ñ‹, Ñ– Ð¿Ð°ÑžÑ‚Ð°Ñ€Ñ‹Ñ†Ðµ ÑÐ¿Ñ€Ð¾Ð±Ñƒ.",
+    "ButtonGotIt": "Ð—Ñ€Ð°Ð·ÑƒÐ¼ÐµÐ»Ð°"
   },
   {
     "lang": "bg-bg",
-    "HeaderConnectToServer": "Свържи се със сървър",
-    "LabelServerHost": "Хост",
-    "LabelServerHostHelp": "192.168.1.100:8096 или https://myserver.com",
-    "Connect": "Свързване",
-    "HeaderConnectionFailure": "Проблем при свързване",
-    "MessageUnableToConnectToServer": "В момента не можем да се свържем с избрания сървър. Моля, уверете се, че работи и опитайте отново.",
-    "ButtonGotIt": "Добре"
+    "HeaderConnectToServer": "Ð¡Ð²ÑŠÑ€Ð¶Ð¸ ÑÐµ ÑÑŠÑ ÑÑŠÑ€Ð²ÑŠÑ€",
+    "LabelServerHost": "Ð¥Ð¾ÑÑ‚",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ð¸Ð»Ð¸ https://myserver.com",
+    "Connect": "Ð¡Ð²ÑŠÑ€Ð·Ð²Ð°Ð½Ðµ",
+    "HeaderConnectionFailure": "ÐŸÑ€Ð¾Ð±Ð»ÐµÐ¼ Ð¿Ñ€Ð¸ ÑÐ²ÑŠÑ€Ð·Ð²Ð°Ð½Ðµ",
+    "MessageUnableToConnectToServer": "Ð’ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚Ð° Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð´Ð° ÑÐµ ÑÐ²ÑŠÑ€Ð¶ÐµÐ¼ Ñ Ð¸Ð·Ð±Ñ€Ð°Ð½Ð¸Ñ ÑÑŠÑ€Ð²ÑŠÑ€. ÐœÐ¾Ð»Ñ, ÑƒÐ²ÐµÑ€ÐµÑ‚Ðµ ÑÐµ, Ñ‡Ðµ Ñ€Ð°Ð±Ð¾Ñ‚Ð¸ Ð¸ Ð¾Ð¿Ð¸Ñ‚Ð°Ð¹Ñ‚Ðµ Ð¾Ñ‚Ð½Ð¾Ð²Ð¾.",
+    "ButtonGotIt": "Ð”Ð¾Ð±Ñ€Ðµ"
   },
   {
     "lang": "bn",
@@ -68,19 +68,19 @@ const languages = [
     "HeaderConnectToServer": null,
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
-    "Connect": "কানেক্ট",
+    "Connect": "à¦•à¦¾à¦¨à§‡à¦•à§à¦Ÿ",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "বুঝেছি"
+    "ButtonGotIt": "à¦¬à§à¦à§‡à¦›à¦¿"
   },
   {
     "lang": "ca",
     "HeaderConnectToServer": "Connectar al servidor",
-    "LabelServerHost": "Amfitrió",
+    "LabelServerHost": "AmfitriÃ³",
     "LabelServerHostHelp": "192.168.1.100:8096 o https://myserver.com",
     "Connect": "Connecta",
-    "HeaderConnectionFailure": "Error de connexió",
-    "MessageUnableToConnectToServer": "No es pot connectar amb el servidor seleccionat en aquest moment. Assegureu-vos que està funcionant i torni a intentar-ho.",
+    "HeaderConnectionFailure": "Error de connexiÃ³",
+    "MessageUnableToConnectToServer": "No es pot connectar amb el servidor seleccionat en aquest moment. Assegureu-vos que estÃ  funcionant i torni a intentar-ho.",
     "ButtonGotIt": "Entesos"
   },
   {
@@ -95,13 +95,13 @@ const languages = [
   },
   {
     "lang": "cs",
-    "HeaderConnectToServer": "Připojit k serveru",
+    "HeaderConnectToServer": "PÅ™ipojit k serveru",
     "LabelServerHost": "Host",
     "LabelServerHostHelp": "192.168.1.100:8096 nebo https://mujserver.cz",
-    "Connect": "Připojit",
-    "HeaderConnectionFailure": "Připojení selhalo",
-    "MessageUnableToConnectToServer": "Nejsme schopni se připojit k vybranému serveru právě teď. Prosím, ujistěte se, že je spuštěn a zkuste to znovu.",
-    "ButtonGotIt": "Rozumím"
+    "Connect": "PÅ™ipojit",
+    "HeaderConnectionFailure": "PÅ™ipojenÃ­ selhalo",
+    "MessageUnableToConnectToServer": "Nejsme schopni se pÅ™ipojit k vybranÃ©mu serveru prÃ¡vÄ› teÄ. ProsÃ­m, ujistÄ›te se, Å¾e je spuÅ¡tÄ›n a zkuste to znovu.",
+    "ButtonGotIt": "RozumÃ­m"
   },
   {
     "lang": "cy",
@@ -116,12 +116,12 @@ const languages = [
   {
     "lang": "da",
     "HeaderConnectToServer": "Forbind til server",
-    "LabelServerHost": "Vært",
+    "LabelServerHost": "VÃ¦rt",
     "LabelServerHostHelp": "F. eks: 192.168.1.100:8096 eller https://myserver.com",
     "Connect": "Forbind",
     "HeaderConnectionFailure": "Forbindelsesfejl",
-    "MessageUnableToConnectToServer": "Vi kan ikke forbinde til den valgte server på nuværende tidspunkt. Sikrer dig venligst at serveren kører og prøv igen.",
-    "ButtonGotIt": "Forstået"
+    "MessageUnableToConnectToServer": "Vi kan ikke forbinde til den valgte server pÃ¥ nuvÃ¦rende tidspunkt. Sikrer dig venligst at serveren kÃ¸rer og prÃ¸v igen.",
+    "ButtonGotIt": "ForstÃ¥et"
   },
   {
     "lang": "de",
@@ -130,18 +130,18 @@ const languages = [
     "LabelServerHostHelp": "192.168.1.100:8096 oder https://myserver.com",
     "Connect": "Verbinden",
     "HeaderConnectionFailure": "Verbindungsfehler",
-    "MessageUnableToConnectToServer": "Wir können gerade keine Verbindung zum gewählten Server herstellen. Bitte stelle sicher, dass dieser läuft und versuche es erneut.",
+    "MessageUnableToConnectToServer": "Wir kÃ¶nnen gerade keine Verbindung zum gewÃ¤hlten Server herstellen. Bitte stelle sicher, dass dieser lÃ¤uft und versuche es erneut.",
     "ButtonGotIt": "Verstanden"
   },
   {
     "lang": "el",
-    "HeaderConnectToServer": "Σύνδεση στον Διακομιστή",
+    "HeaderConnectToServer": "Î£ÏÎ½Î´ÎµÏƒÎ· ÏƒÏ„Î¿Î½ Î”Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î®",
     "LabelServerHost": "Host",
-    "LabelServerHostHelp": "192.168.1.100:8096 ή https://myserver.com",
-    "Connect": "Σύνδεση",
-    "HeaderConnectionFailure": "Αποτυχία σύνδεσης",
-    "MessageUnableToConnectToServer": "Δεν είναι δυνατή η σύνδεση με τον επιλεγμένο διακομιστή αυτή τη στιγμή. Βεβαιωθείτε ότι εκτελείται και προσπαθήστε ξανά.",
-    "ButtonGotIt": "Το κατάλαβα"
+    "LabelServerHostHelp": "192.168.1.100:8096 Î® https://myserver.com",
+    "Connect": "Î£ÏÎ½Î´ÎµÏƒÎ·",
+    "HeaderConnectionFailure": "Î‘Ï€Î¿Ï„Ï…Ï‡Î¯Î± ÏƒÏÎ½Î´ÎµÏƒÎ·Ï‚",
+    "MessageUnableToConnectToServer": "Î”ÎµÎ½ ÎµÎ¯Î½Î±Î¹ Î´Ï…Î½Î±Ï„Î® Î· ÏƒÏÎ½Î´ÎµÏƒÎ· Î¼Îµ Ï„Î¿Î½ ÎµÏ€Î¹Î»ÎµÎ³Î¼Î­Î½Î¿ Î´Î¹Î±ÎºÎ¿Î¼Î¹ÏƒÏ„Î® Î±Ï…Ï„Î® Ï„Î· ÏƒÏ„Î¹Î³Î¼Î®. Î’ÎµÎ²Î±Î¹Ï‰Î¸ÎµÎ¯Ï„Îµ ÏŒÏ„Î¹ ÎµÎºÏ„ÎµÎ»ÎµÎ¯Ï„Î±Î¹ ÎºÎ±Î¹ Ï€ÏÎ¿ÏƒÏ€Î±Î¸Î®ÏƒÏ„Îµ Î¾Î±Î½Î¬.",
+    "ButtonGotIt": "Î¤Î¿ ÎºÎ±Ï„Î¬Î»Î±Î²Î±"
   },
   {
     "lang": "en-gb",
@@ -167,10 +167,10 @@ const languages = [
     "lang": "eo",
     "HeaderConnectToServer": "Konekti al Servilo",
     "LabelServerHost": "Gastigo",
-    "LabelServerHostHelp": "192.168.1.100:8096 aŭ https://myserver.com",
+    "LabelServerHostHelp": "192.168.1.100:8096 aÅ­ https://myserver.com",
     "Connect": "Konektu",
     "HeaderConnectionFailure": "Konekto Malsukcesis",
-    "MessageUnableToConnectToServer": "Ni ne povas konektiĝi al la elektita servilo nun. Certigi, ke ĝi funkcias kaj provi denove.",
+    "MessageUnableToConnectToServer": "Ni ne povas konektiÄi al la elektita servilo nun. Certigi, ke Äi funkcias kaj provi denove.",
     "ButtonGotIt": "Kompreneblas"
   },
   {
@@ -179,9 +179,9 @@ const languages = [
     "LabelServerHost": "Host",
     "LabelServerHostHelp": "192.168.1.100:8096 o https://miservidor.com",
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Conexión fallida",
-    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. Asegúrese de que se esté ejecutando e intente nuevamente.",
-    "ButtonGotIt": "Lo entendí"
+    "HeaderConnectionFailure": "ConexiÃ³n fallida",
+    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. AsegÃºrese de que se estÃ© ejecutando e intente nuevamente.",
+    "ButtonGotIt": "Lo entendÃ­"
   },
   {
     "lang": "es-mx",
@@ -189,8 +189,8 @@ const languages = [
     "LabelServerHost": "Servidor",
     "LabelServerHostHelp": "192.168.1.100:8096 o https://miservidor.com",
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Falla de conexión",
-    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. Por favor, asegúrate de que está funcionando e inténtalo de nuevo.",
+    "HeaderConnectionFailure": "Falla de conexiÃ³n",
+    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. Por favor, asegÃºrate de que estÃ¡ funcionando e intÃ©ntalo de nuevo.",
     "ButtonGotIt": "Hecho"
   },
   {
@@ -199,8 +199,8 @@ const languages = [
     "LabelServerHost": "Host",
     "LabelServerHostHelp": "192.168.1.100:8096 o https://miservidor.com",
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Fallo de conexión",
-    "MessageUnableToConnectToServer": "No podemos conectar con el servidor seleccionado ahora mismo. Por favor, asegúrate de que esta funcionando e inténtalo otra vez.",
+    "HeaderConnectionFailure": "Fallo de conexiÃ³n",
+    "MessageUnableToConnectToServer": "No podemos conectar con el servidor seleccionado ahora mismo. Por favor, asegÃºrate de que esta funcionando e intÃ©ntalo otra vez.",
     "ButtonGotIt": "Entendido"
   },
   {
@@ -209,8 +209,8 @@ const languages = [
     "LabelServerHost": "Servidor",
     "LabelServerHostHelp": "192.168.1.100:8096 o https://miservidor.com",
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Falla de conexión",
-    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. Por favor, asegúrate de que está funcionando e inténtalo de nuevo.",
+    "HeaderConnectionFailure": "Falla de conexiÃ³n",
+    "MessageUnableToConnectToServer": "No podemos conectarnos al servidor seleccionado en este momento. Por favor, asegÃºrate de que estÃ¡ funcionando e intÃ©ntalo de nuevo.",
     "ButtonGotIt": "Hecho"
   },
   {
@@ -225,12 +225,12 @@ const languages = [
   },
   {
     "lang": "et",
-    "HeaderConnectToServer": "Ühendu serveriga",
+    "HeaderConnectToServer": "Ãœhendu serveriga",
     "LabelServerHost": "Peremeesmasin",
-    "LabelServerHostHelp": "192.168.1.100:8096 või https://myserver.com",
-    "Connect": "Ühenda",
-    "HeaderConnectionFailure": "Ühenduse tõrge",
-    "MessageUnableToConnectToServer": "Me ei saa praegu valitud serveriga ühendust. Veendu, et see töötab ja proovi uuesti.",
+    "LabelServerHostHelp": "192.168.1.100:8096 vÃµi https://myserver.com",
+    "Connect": "Ãœhenda",
+    "HeaderConnectionFailure": "Ãœhenduse tÃµrge",
+    "MessageUnableToConnectToServer": "Me ei saa praegu valitud serveriga Ã¼hendust. Veendu, et see tÃ¶Ã¶tab ja proovi uuesti.",
     "ButtonGotIt": "Selge"
   },
   {
@@ -245,23 +245,23 @@ const languages = [
   },
   {
     "lang": "fa",
-    "HeaderConnectToServer": "اتصال به سرور",
-    "LabelServerHost": "میزبان",
-    "LabelServerHostHelp": "192.168.1.100:8096 یا https://myserver.com",
-    "Connect": "اتصال",
-    "HeaderConnectionFailure": "عدم اتصال",
+    "HeaderConnectToServer": "Ø§ØªØµØ§Ù„ Ø¨Ù‡ Ø³Ø±ÙˆØ±",
+    "LabelServerHost": "Ù…ÛŒØ²Ø¨Ø§Ù†",
+    "LabelServerHostHelp": "192.168.1.100:8096 ÛŒØ§ https://myserver.com",
+    "Connect": "Ø§ØªØµØ§Ù„",
+    "HeaderConnectionFailure": "Ø¹Ø¯Ù… Ø§ØªØµØ§Ù„",
     "MessageUnableToConnectToServer": "",
-    "ButtonGotIt": "متوجه شدم"
+    "ButtonGotIt": "Ù…ØªÙˆØ¬Ù‡ Ø´Ø¯Ù…"
   },
   {
     "lang": "fi",
-    "HeaderConnectToServer": "Yhdistä palvelimeen",
-    "LabelServerHost": "Isäntä",
+    "HeaderConnectToServer": "YhdistÃ¤ palvelimeen",
+    "LabelServerHost": "IsÃ¤ntÃ¤",
     "LabelServerHostHelp": "192.168.1.100:8096 tai https://myserver.com",
-    "Connect": "Yhdistä",
-    "HeaderConnectionFailure": "Yhteys epäonnistui",
-    "MessageUnableToConnectToServer": "Valittuun palvelimeen yhdistäminen epäonnistui. Tarkista, että se on päällä ja yritä uudestaan.",
-    "ButtonGotIt": "Selvä"
+    "Connect": "YhdistÃ¤",
+    "HeaderConnectionFailure": "Yhteys epÃ¤onnistui",
+    "MessageUnableToConnectToServer": "Valittuun palvelimeen yhdistÃ¤minen epÃ¤onnistui. Tarkista, ettÃ¤ se on pÃ¤Ã¤llÃ¤ ja yritÃ¤ uudestaan.",
+    "ButtonGotIt": "SelvÃ¤"
   },
   {
     "lang": "fil",
@@ -285,22 +285,24 @@ const languages = [
   },
   {
     "lang": "fr-ca",
+    "DiscoveredServers": "Serveurs détectés sur le réseau",
     "HeaderConnectToServer": "Connexion au serveur",
-    "LabelServerHost": "Hôte",
+    "LabelServerHost": "HÃ´te",
     "LabelServerHostHelp": "192.168.1.100:8096 ou https://monserveur.com",
     "Connect": "Connexion",
-    "HeaderConnectionFailure": "Échec de connexion",
-    "MessageUnableToConnectToServer": "Impossible de se connecter au serveur sélectionné. Assurez-vous qu'il est opérationnel.",
+    "HeaderConnectionFailure": "Ã‰chec de connexion",
+    "MessageUnableToConnectToServer": "Impossible de se connecter au serveur sÃ©lectionnÃ©. Assurez-vous qu'il est opÃ©rationnel.",
     "ButtonGotIt": "J'ai compris"
   },
   {
     "lang": "fr",
+    "DiscoveredServers": "Serveurs détectés sur le réseau",
     "HeaderConnectToServer": "Connexion au serveur",
-    "LabelServerHost": "Nom d'hôte",
+    "LabelServerHost": "Nom d'hÃ´te",
     "LabelServerHostHelp": "192.168.1.1:8096 ou https://monserveur.com",
     "Connect": "Se connecter",
-    "HeaderConnectionFailure": "Échec de connexion",
-    "MessageUnableToConnectToServer": "Nous sommes dans l'impossibilité de nous connecter au serveur sélectionné. Veuillez vérifier qu'il est opérationnel et réessayez.",
+    "HeaderConnectionFailure": "Ã‰chec de connexion",
+    "MessageUnableToConnectToServer": "Nous sommes dans l'impossibilitÃ© de nous connecter au serveur sÃ©lectionnÃ©. Veuillez vÃ©rifier qu'il est opÃ©rationnel et rÃ©essayez.",
     "ButtonGotIt": "Compris"
   },
   {
@@ -319,7 +321,7 @@ const languages = [
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Fallo de Conexión",
+    "HeaderConnectionFailure": "Fallo de ConexiÃ³n",
     "MessageUnableToConnectToServer": null,
     "ButtonGotIt": "Entendo"
   },
@@ -345,13 +347,13 @@ const languages = [
   },
   {
     "lang": "he",
-    "HeaderConnectToServer": "התחבר לשרת",
-    "LabelServerHost": "מארח",
-    "LabelServerHostHelp": "192.168.1.100:8096 או https://myserver.com",
-    "Connect": "התחבר",
-    "HeaderConnectionFailure": "כשל בחיבור",
+    "HeaderConnectToServer": "×”×ª×—×‘×¨ ×œ×©×¨×ª",
+    "LabelServerHost": "×ž××¨×—",
+    "LabelServerHostHelp": "192.168.1.100:8096 ××• https://myserver.com",
+    "Connect": "×”×ª×—×‘×¨",
+    "HeaderConnectionFailure": "×›×©×œ ×‘×—×™×‘×•×¨",
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "הבנתי"
+    "ButtonGotIt": "×”×‘× ×ª×™"
   },
   {
     "lang": "hi-in",
@@ -361,33 +363,33 @@ const languages = [
     "Connect": null,
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "समझ गया"
+    "ButtonGotIt": "à¤¸à¤®à¤ à¤—à¤¯à¤¾"
   },
   {
     "lang": "hr",
     "HeaderConnectToServer": "Spoji se na Server",
-    "LabelServerHost": "Domaćin",
+    "LabelServerHost": "DomaÄ‡in",
     "LabelServerHostHelp": "192.168.1.100:8096 ili https://myserver.com",
     "Connect": "Povezati",
     "HeaderConnectionFailure": "Neuspjelo spajanje",
-    "MessageUnableToConnectToServer": "Nismo u mogućnosti spojiti se na odabrani poslužitelj. Provjerite dali je pokrenut i pokušajte ponovno.",
-    "ButtonGotIt": "Shvaćam"
+    "MessageUnableToConnectToServer": "Nismo u moguÄ‡nosti spojiti se na odabrani posluÅ¾itelj. Provjerite dali je pokrenut i pokuÅ¡ajte ponovno.",
+    "ButtonGotIt": "ShvaÄ‡am"
   },
   {
     "lang": "hu",
-    "HeaderConnectToServer": "Kapcsolódás a Szerverhez",
-    "LabelServerHost": "Kiszolgáló",
+    "HeaderConnectToServer": "KapcsolÃ³dÃ¡s a Szerverhez",
+    "LabelServerHost": "KiszolgÃ¡lÃ³",
     "LabelServerHostHelp": "192.168.1.100:8096 vagy https://myserver.com",
-    "Connect": "Kapcsolódás",
+    "Connect": "KapcsolÃ³dÃ¡s",
     "HeaderConnectionFailure": "Kapcsolathiba",
-    "MessageUnableToConnectToServer": "Jelenleg nem tudunk csatlakozni a kiválasztott szerverhez. Győződj meg róla, hogy fut és próbáld meg újra.",
-    "ButtonGotIt": "Értettem"
+    "MessageUnableToConnectToServer": "Jelenleg nem tudunk csatlakozni a kivÃ¡lasztott szerverhez. GyÅ‘zÅ‘dj meg rÃ³la, hogy fut Ã©s prÃ³bÃ¡ld meg Ãºjra.",
+    "ButtonGotIt": "Ã‰rtettem"
   },
   {
     "lang": "hy",
     "HeaderConnectToServer": null,
     "LabelServerHost": null,
-    "LabelServerHostHelp": "192.168.1.100:8096 կամ https://myserver.com",
+    "LabelServerHostHelp": "192.168.1.100:8096 Õ¯Õ¡Õ´ https://myserver.com",
     "Connect": null,
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
@@ -411,7 +413,7 @@ const languages = [
     "Connect": "Tengjast",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "Skilið"
+    "ButtonGotIt": "SkiliÃ°"
   },
   {
     "lang": "it",
@@ -425,13 +427,13 @@ const languages = [
   },
   {
     "lang": "ja",
-    "HeaderConnectToServer": "サーバーに接続",
-    "LabelServerHost": "ホスト",
-    "LabelServerHostHelp": "192.168.1.100:8096 又は https://myserver.com",
-    "Connect": "接続",
-    "HeaderConnectionFailure": "接続失敗",
-    "MessageUnableToConnectToServer": "現在、選択されたサーバーへの接続ができません。稼働していることを確認しもう一度やり直してください。",
-    "ButtonGotIt": "了解"
+    "HeaderConnectToServer": "ã‚µãƒ¼ãƒãƒ¼ã«æŽ¥ç¶š",
+    "LabelServerHost": "ãƒ›ã‚¹ãƒˆ",
+    "LabelServerHostHelp": "192.168.1.100:8096 åˆã¯ https://myserver.com",
+    "Connect": "æŽ¥ç¶š",
+    "HeaderConnectionFailure": "æŽ¥ç¶šå¤±æ•—",
+    "MessageUnableToConnectToServer": "ç¾åœ¨ã€é¸æŠžã•ã‚ŒãŸã‚µãƒ¼ãƒãƒ¼ã¸ã®æŽ¥ç¶šãŒã§ãã¾ã›ã‚“ã€‚ç¨¼åƒã—ã¦ã„ã‚‹ã“ã¨ã‚’ç¢ºèªã—ã‚‚ã†ä¸€åº¦ã‚„ã‚Šç›´ã—ã¦ãã ã•ã„ã€‚",
+    "ButtonGotIt": "äº†è§£"
   },
   {
     "lang": "jbo",
@@ -451,7 +453,7 @@ const languages = [
     "Connect": null,
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "გასაგებია"
+    "ButtonGotIt": "áƒ’áƒáƒ¡áƒáƒ’áƒ”áƒ‘áƒ˜áƒ"
   },
   {
     "lang": "kab",
@@ -466,12 +468,12 @@ const languages = [
   {
     "lang": "kk",
     "HeaderConnectToServer": "Serverge qosylu",
-    "LabelServerHost": "Tüiın",
+    "LabelServerHost": "TÃ¼iÄ±n",
     "LabelServerHostHelp": "192.168.1.100:8096 nemese https://myserver.com",
     "Connect": "Qosylu",
-    "HeaderConnectionFailure": "Qosylu sätsız",
-    "MessageUnableToConnectToServer": "Tañdalğan serverge qosyluymyz däl qazır mümkın emes. Būl ıske qosylğanyna köz jetkızıñız jäne ärekettı keiın qaitalañyz.",
-    "ButtonGotIt": "Tüsınıktı"
+    "HeaderConnectionFailure": "Qosylu sÃ¤tsÄ±z",
+    "MessageUnableToConnectToServer": "TaÃ±dalÄŸan serverge qosyluymyz dÃ¤l qazÄ±r mÃ¼mkÄ±n emes. BÅ«l Ä±ske qosylÄŸanyna kÃ¶z jetkÄ±zÄ±Ã±Ä±z jÃ¤ne Ã¤rekettÄ± keiÄ±n qaitalaÃ±yz.",
+    "ButtonGotIt": "TÃ¼sÄ±nÄ±ktÄ±"
   },
   {
     "lang": "kn",
@@ -485,13 +487,13 @@ const languages = [
   },
   {
     "lang": "ko",
-    "HeaderConnectToServer": "서버 접속",
-    "LabelServerHost": "호스트",
-    "LabelServerHostHelp": "192.168.1.100:8096 또는 https://myserver.com",
-    "Connect": "접속",
-    "HeaderConnectionFailure": "연결 실패",
-    "MessageUnableToConnectToServer": "선택한 서버에 연결할 수 없습니다. 서버가 실행 중인지 확인후 다시 시도하세요.",
-    "ButtonGotIt": "알겠습니다"
+    "HeaderConnectToServer": "ì„œë²„ ì ‘ì†",
+    "LabelServerHost": "í˜¸ìŠ¤íŠ¸",
+    "LabelServerHostHelp": "192.168.1.100:8096 ë˜ëŠ” https://myserver.com",
+    "Connect": "ì ‘ì†",
+    "HeaderConnectionFailure": "ì—°ê²° ì‹¤íŒ¨",
+    "MessageUnableToConnectToServer": "ì„ íƒí•œ ì„œë²„ì— ì—°ê²°í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤. ì„œë²„ê°€ ì‹¤í–‰ ì¤‘ì¸ì§€ í™•ì¸í›„ ë‹¤ì‹œ ì‹œë„í•˜ì„¸ìš”.",
+    "ButtonGotIt": "ì•Œê² ìŠµë‹ˆë‹¤"
   },
   {
     "lang": "kw",
@@ -529,8 +531,8 @@ const languages = [
     "LabelServerHost": "Resursdators",
     "LabelServerHostHelp": "192.168.1.100:8096 vai https://myserver.com",
     "Connect": "Savienot",
-    "HeaderConnectionFailure": "Savienojuma kļūda",
-    "MessageUnableToConnectToServer": "Mēs pašlaik nevaram sazināties ar izvēlēto serveri. Pārliecinies ka tas strādā, un mēģini vēlreiz.",
+    "HeaderConnectionFailure": "Savienojuma kÄ¼Å«da",
+    "MessageUnableToConnectToServer": "MÄ“s paÅ¡laik nevaram sazinÄties ar izvÄ“lÄ“to serveri. PÄrliecinies ka tas strÄdÄ, un mÄ“Ä£ini vÄ“lreiz.",
     "ButtonGotIt": "Sapratu"
   },
   {
@@ -548,20 +550,20 @@ const languages = [
     "HeaderConnectToServer": null,
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
-    "Connect": "Поврзи",
+    "Connect": "ÐŸÐ¾Ð²Ñ€Ð·Ð¸",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "Потврдувам"
+    "ButtonGotIt": "ÐŸÐ¾Ñ‚Ð²Ñ€Ð´ÑƒÐ²Ð°Ð¼"
   },
   {
     "lang": "ml",
-    "HeaderConnectToServer": "സെർവറിലേക്ക് കണക്റ്റുചെയ്യുക",
-    "LabelServerHost": "ഹോസ്റ്റ്",
-    "LabelServerHostHelp": "192.168.1.100:8096 അല്ലെങ്കിൽ https://myserver.com",
-    "Connect": "ബന്ധിപ്പിക്കുക",
-    "HeaderConnectionFailure": "കണക്ഷൻ പരാജയം",
-    "MessageUnableToConnectToServer": "തിരഞ്ഞെടുത്ത സെർവറിലേക്ക് ഞങ്ങൾക്ക് ഇപ്പോൾ കണക്റ്റുചെയ്യാൻ കഴിയില്ല. ഇത് പ്രവർത്തിക്കുന്നുവെന്ന് ഉറപ്പാക്കി വീണ്ടും ശ്രമിക്കുക.",
-    "ButtonGotIt": "മനസ്സിലായി"
+    "HeaderConnectToServer": "à´¸àµ†àµ¼à´µà´±à´¿à´²àµ‡à´•àµà´•àµ à´•à´£à´•àµà´±àµà´±àµà´šàµ†à´¯àµà´¯àµà´•",
+    "LabelServerHost": "à´¹àµ‹à´¸àµà´±àµà´±àµ",
+    "LabelServerHostHelp": "192.168.1.100:8096 à´…à´²àµà´²àµ†à´™àµà´•à´¿àµ½ https://myserver.com",
+    "Connect": "à´¬à´¨àµà´§à´¿à´ªàµà´ªà´¿à´•àµà´•àµà´•",
+    "HeaderConnectionFailure": "à´•à´£à´•àµà´·àµ» à´ªà´°à´¾à´œà´¯à´‚",
+    "MessageUnableToConnectToServer": "à´¤à´¿à´°à´žàµà´žàµ†à´Ÿàµà´¤àµà´¤ à´¸àµ†àµ¼à´µà´±à´¿à´²àµ‡à´•àµà´•àµ à´žà´™àµà´™àµ¾à´•àµà´•àµ à´‡à´ªàµà´ªàµ‹àµ¾ à´•à´£à´•àµà´±àµà´±àµà´šàµ†à´¯àµà´¯à´¾àµ» à´•à´´à´¿à´¯à´¿à´²àµà´².Â à´‡à´¤àµ à´ªàµà´°à´µàµ¼à´¤àµà´¤à´¿à´•àµà´•àµà´¨àµà´¨àµà´µàµ†à´¨àµà´¨àµ à´‰à´±à´ªàµà´ªà´¾à´•àµà´•à´¿ à´µàµ€à´£àµà´Ÿàµà´‚ à´¶àµà´°à´®à´¿à´•àµà´•àµà´•.",
+    "ButtonGotIt": "à´®à´¨à´¸àµà´¸à´¿à´²à´¾à´¯à´¿"
   },
   {
     "lang": "mn",
@@ -581,7 +583,7 @@ const languages = [
     "Connect": null,
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "समजले"
+    "ButtonGotIt": "à¤¸à¤®à¤œà¤²à¥‡"
   },
   {
     "lang": "ms",
@@ -608,10 +610,10 @@ const languages = [
     "HeaderConnectToServer": null,
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
-    "Connect": "ချိတ်ဆက်ပါ",
+    "Connect": "á€á€»á€­á€á€ºá€†á€€á€ºá€•á€«",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "ရပြီ"
+    "ButtonGotIt": "á€›á€•á€¼á€®"
   },
   {
     "lang": "nb",
@@ -620,8 +622,8 @@ const languages = [
     "LabelServerHostHelp": "192.168.1.100:8096 eller https://minserver.no",
     "Connect": "Koble til",
     "HeaderConnectionFailure": "Tilkobling feilet",
-    "MessageUnableToConnectToServer": "Vi klarte ikke å koble til den valgte serveren akkurat nå. Vennligst sørg for at den kjører og prøv på nytt.",
-    "ButtonGotIt": "Skjønner"
+    "MessageUnableToConnectToServer": "Vi klarte ikke Ã¥ koble til den valgte serveren akkurat nÃ¥. Vennligst sÃ¸rg for at den kjÃ¸rer og prÃ¸v pÃ¥ nytt.",
+    "ButtonGotIt": "SkjÃ¸nner"
   },
   {
     "lang": "ne",
@@ -651,26 +653,26 @@ const languages = [
     "Connect": "Kople til",
     "HeaderConnectionFailure": "Tilkoplingsfeil",
     "MessageUnableToConnectToServer": null,
-    "ButtonGotIt": "Skjønner"
+    "ButtonGotIt": "SkjÃ¸nner"
   },
   {
     "lang": "pa",
     "HeaderConnectToServer": null,
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
-    "Connect": "ਕਨੈਕਟ ਕਰੋ",
+    "Connect": "à¨•à¨¨à©ˆà¨•à¨Ÿ à¨•à¨°à©‹",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
     "ButtonGotIt": null
   },
   {
     "lang": "pl",
-    "HeaderConnectToServer": "Podłącz do serwera",
+    "HeaderConnectToServer": "PodÅ‚Ä…cz do serwera",
     "LabelServerHost": "Serwer",
     "LabelServerHostHelp": "192.168.1.100:8096 lub https://mojserwer.pl",
-    "Connect": "Połącz",
-    "HeaderConnectionFailure": "Niepowodzenie połączenia",
-    "MessageUnableToConnectToServer": "Połączenie z wybranym serwerem jest teraz niemożliwe. Upewnij się, że jest uruchomiony i spróbuj ponownie.",
+    "Connect": "PoÅ‚Ä…cz",
+    "HeaderConnectionFailure": "Niepowodzenie poÅ‚Ä…czenia",
+    "MessageUnableToConnectToServer": "PoÅ‚Ä…czenie z wybranym serwerem jest teraz niemoÅ¼liwe. Upewnij siÄ™, Å¼e jest uruchomiony i sprÃ³buj ponownie.",
     "ButtonGotIt": "Rozumiem"
   },
   {
@@ -689,8 +691,8 @@ const languages = [
     "LabelServerHost": "Servidor",
     "LabelServerHostHelp": "192.168.1.100:8096 ou https://meuservidor.com",
     "Connect": "Conectar",
-    "HeaderConnectionFailure": "Falha na Conexão",
-    "MessageUnableToConnectToServer": "Não foi possível conectar ao servidor selecionado. Por favor, verifique se está sendo executado e tente novamente.",
+    "HeaderConnectionFailure": "Falha na ConexÃ£o",
+    "MessageUnableToConnectToServer": "NÃ£o foi possÃ­vel conectar ao servidor selecionado. Por favor, verifique se estÃ¡ sendo executado e tente novamente.",
     "ButtonGotIt": "Feito"
   },
   {
@@ -699,8 +701,8 @@ const languages = [
     "LabelServerHost": "Servidor",
     "LabelServerHostHelp": "192.168.1.100:8096 ou https://omeudominio.com",
     "Connect": "Ligar",
-    "HeaderConnectionFailure": "Falha de ligação",
-    "MessageUnableToConnectToServer": "Não foi possível estabelecer ligação ao servidor. Por favor, certifique-se de que o servidor está a correr e tente de novo.",
+    "HeaderConnectionFailure": "Falha de ligaÃ§Ã£o",
+    "MessageUnableToConnectToServer": "NÃ£o foi possÃ­vel estabelecer ligaÃ§Ã£o ao servidor. Por favor, certifique-se de que o servidor estÃ¡ a correr e tente de novo.",
     "ButtonGotIt": "Entendido"
   },
   {
@@ -709,29 +711,29 @@ const languages = [
     "LabelServerHost": "Servidor",
     "LabelServerHostHelp": "192.168.1.100:8096 ou https://omeudominio.com",
     "Connect": "Ligar",
-    "HeaderConnectionFailure": "Falha de Ligação",
-    "MessageUnableToConnectToServer": "Não foi possível estabelecer ligação ao servidor. Por favor, certifique-se que o servidor está a correr e tente de novo.",
+    "HeaderConnectionFailure": "Falha de LigaÃ§Ã£o",
+    "MessageUnableToConnectToServer": "NÃ£o foi possÃ­vel estabelecer ligaÃ§Ã£o ao servidor. Por favor, certifique-se que o servidor estÃ¡ a correr e tente de novo.",
     "ButtonGotIt": "Entendido"
   },
   {
     "lang": "ro",
-    "HeaderConnectToServer": "Conectați-vă la server",
-    "LabelServerHost": "Gazdă",
+    "HeaderConnectToServer": "ConectaÈ›i-vÄƒ la server",
+    "LabelServerHost": "GazdÄƒ",
     "LabelServerHostHelp": "192.168.1.100:8096 sau https://myserver.com",
     "Connect": "Conectare",
-    "HeaderConnectionFailure": "Conexiune eșuată",
-    "MessageUnableToConnectToServer": "Nu putem să ne conectăm la serverul selectat în acest moment. Vă rugăm să vă asigurați că funcționează și încercați din nou.",
-    "ButtonGotIt": "Am înțeles"
+    "HeaderConnectionFailure": "Conexiune eÈ™uatÄƒ",
+    "MessageUnableToConnectToServer": "Nu putem sÄƒ ne conectÄƒm la serverul selectat Ã®n acest moment. VÄƒ rugÄƒm sÄƒ vÄƒ asiguraÈ›i cÄƒ funcÈ›ioneazÄƒ È™i Ã®ncercaÈ›i din nou.",
+    "ButtonGotIt": "Am Ã®nÈ›eles"
   },
   {
     "lang": "ru",
-    "HeaderConnectToServer": "Соединение с сервером",
-    "LabelServerHost": "Узел",
-    "LabelServerHostHelp": "192.168.1.100:8096 или https://myserver.com",
-    "Connect": "Соединиться",
-    "HeaderConnectionFailure": "Сбой соединения",
-    "MessageUnableToConnectToServer": "Мы не можем подсоединиться к выбранному серверу в данный момент. Убедитесь, что он запущен и повторите попытку.",
-    "ButtonGotIt": "Понятно"
+    "HeaderConnectToServer": "Ð¡Ð¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼",
+    "LabelServerHost": "Ð£Ð·ÐµÐ»",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ð¸Ð»Ð¸ https://myserver.com",
+    "Connect": "Ð¡Ð¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒÑÑ",
+    "HeaderConnectionFailure": "Ð¡Ð±Ð¾Ð¹ ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ",
+    "MessageUnableToConnectToServer": "ÐœÑ‹ Ð½Ðµ Ð¼Ð¾Ð¶ÐµÐ¼ Ð¿Ð¾Ð´ÑÐ¾ÐµÐ´Ð¸Ð½Ð¸Ñ‚ÑŒÑÑ Ðº Ð²Ñ‹Ð±Ñ€Ð°Ð½Ð½Ð¾Ð¼Ñƒ ÑÐµÑ€Ð²ÐµÑ€Ñƒ Ð² Ð´Ð°Ð½Ð½Ñ‹Ð¹ Ð¼Ð¾Ð¼ÐµÐ½Ñ‚. Ð£Ð±ÐµÐ´Ð¸Ñ‚ÐµÑÑŒ, Ñ‡Ñ‚Ð¾ Ð¾Ð½ Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½ Ð¸ Ð¿Ð¾Ð²Ñ‚Ð¾Ñ€Ð¸Ñ‚Ðµ Ð¿Ð¾Ð¿Ñ‹Ñ‚ÐºÑƒ.",
+    "ButtonGotIt": "ÐŸÐ¾Ð½ÑÑ‚Ð½Ð¾"
   },
   {
     "lang": "si",
@@ -745,22 +747,22 @@ const languages = [
   },
   {
     "lang": "sk",
-    "HeaderConnectToServer": "Pripojiť sa k serveru",
-    "LabelServerHost": "Hosť",
+    "HeaderConnectToServer": "PripojiÅ¥ sa k serveru",
+    "LabelServerHost": "HosÅ¥",
     "LabelServerHostHelp": "192.168.1.100:8096 alebo https://mojserver.sk",
-    "Connect": "Pripojiť",
+    "Connect": "PripojiÅ¥",
     "HeaderConnectionFailure": "Pripojenie zlyhalo",
-    "MessageUnableToConnectToServer": "Nie sme schopný sa aktuálne pripojiť k vybranému serveru. Prosím, uistite sa, že je spustený a skúste to znovu.",
+    "MessageUnableToConnectToServer": "Nie sme schopnÃ½ sa aktuÃ¡lne pripojiÅ¥ k vybranÃ©mu serveru. ProsÃ­m, uistite sa, Å¾e je spustenÃ½ a skÃºste to znovu.",
     "ButtonGotIt": "Rozumiem"
   },
   {
     "lang": "sl-si",
-    "HeaderConnectToServer": "Poveži s strežnikom",
-    "LabelServerHost": "Naslov strežnika",
+    "HeaderConnectToServer": "PoveÅ¾i s streÅ¾nikom",
+    "LabelServerHost": "Naslov streÅ¾nika",
     "LabelServerHostHelp": "192.168.1.100:8096 ali https://myserver.com",
-    "Connect": "Poveži",
+    "Connect": "PoveÅ¾i",
     "HeaderConnectionFailure": "Napaka povezave",
-    "MessageUnableToConnectToServer": "Povezava s strežnikom trenutno ni mogoča. Preverite, da je strežnik zagnan in poskusite ponovno.",
+    "MessageUnableToConnectToServer": "Povezava s streÅ¾nikom trenutno ni mogoÄa. Preverite, da je streÅ¾nik zagnan in poskusite ponovno.",
     "ButtonGotIt": "Razumem"
   },
   {
@@ -779,69 +781,69 @@ const languages = [
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
     "Connect": "Lidhu",
-    "HeaderConnectionFailure": "Dështim në lidhje",
+    "HeaderConnectionFailure": "DÃ«shtim nÃ« lidhje",
     "MessageUnableToConnectToServer": null,
     "ButtonGotIt": "Kuptova"
   },
   {
     "lang": "sr",
-    "HeaderConnectToServer": "Повежи се са сервером",
-    "LabelServerHost": "Домаћин",
-    "LabelServerHostHelp": "192.168.1.100:8096 или https://myserver.com",
-    "Connect": "Повежи",
-    "HeaderConnectionFailure": "Спајање неуспешно",
-    "MessageUnableToConnectToServer": "Тренутно нисмо у могућности да се повежемо са изабраним сервером. Уверите се да је покренут и покушајте поново.",
-    "ButtonGotIt": "У реду"
+    "HeaderConnectToServer": "ÐŸÐ¾Ð²ÐµÐ¶Ð¸ ÑÐµ ÑÐ° ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼",
+    "LabelServerHost": "Ð”Ð¾Ð¼Ð°Ñ›Ð¸Ð½",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ð¸Ð»Ð¸ https://myserver.com",
+    "Connect": "ÐŸÐ¾Ð²ÐµÐ¶Ð¸",
+    "HeaderConnectionFailure": "Ð¡Ð¿Ð°Ñ˜Ð°ÑšÐµ Ð½ÐµÑƒÑÐ¿ÐµÑˆÐ½Ð¾",
+    "MessageUnableToConnectToServer": "Ð¢Ñ€ÐµÐ½ÑƒÑ‚Ð½Ð¾ Ð½Ð¸ÑÐ¼Ð¾ Ñƒ Ð¼Ð¾Ð³ÑƒÑ›Ð½Ð¾ÑÑ‚Ð¸ Ð´Ð° ÑÐµ Ð¿Ð¾Ð²ÐµÐ¶ÐµÐ¼Ð¾ ÑÐ° Ð¸Ð·Ð°Ð±Ñ€Ð°Ð½Ð¸Ð¼ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼. Ð£Ð²ÐµÑ€Ð¸Ñ‚Ðµ ÑÐµ Ð´Ð° Ñ˜Ðµ Ð¿Ð¾ÐºÑ€ÐµÐ½ÑƒÑ‚ Ð¸ Ð¿Ð¾ÐºÑƒÑˆÐ°Ñ˜Ñ‚Ðµ Ð¿Ð¾Ð½Ð¾Ð²Ð¾.",
+    "ButtonGotIt": "Ð£ Ñ€ÐµÐ´Ñƒ"
   },
   {
     "lang": "sv",
     "HeaderConnectToServer": "Anslut till server",
-    "LabelServerHost": "Värd",
+    "LabelServerHost": "VÃ¤rd",
     "LabelServerHostHelp": "192.168.1.100:8096 eller https://min.server.com",
     "Connect": "Anslut",
     "HeaderConnectionFailure": "Misslyckad anslutning",
-    "MessageUnableToConnectToServer": "Vi kunde inte upprätta en anslutning till vald server just nu. Försäkra dig om att den är påslagen och försök igen.",
+    "MessageUnableToConnectToServer": "Vi kunde inte upprÃ¤tta en anslutning till vald server just nu. FÃ¶rsÃ¤kra dig om att den Ã¤r pÃ¥slagen och fÃ¶rsÃ¶k igen.",
     "ButtonGotIt": "Ok"
   },
   {
     "lang": "ta",
-    "HeaderConnectToServer": "சேவையகத்துடன் இணைக்கவும்",
-    "LabelServerHost": "தொகுப்பாளர்",
+    "HeaderConnectToServer": "à®šà¯‡à®µà¯ˆà®¯à®•à®¤à¯à®¤à¯à®Ÿà®©à¯ à®‡à®£à¯ˆà®•à¯à®•à®µà¯à®®à¯",
+    "LabelServerHost": "à®¤à¯Šà®•à¯à®ªà¯à®ªà®¾à®³à®°à¯",
     "LabelServerHostHelp": "192.168.1.100:8096 or https://myserver.com",
-    "Connect": "இணைக்கவும்",
-    "HeaderConnectionFailure": "இணைப்பு தோல்வி",
-    "MessageUnableToConnectToServer": "தேர்ந்தெடுக்கப்பட்ட சேவையகத்துடன் இப்போது எங்களால் இணைக்க முடியவில்லை. இது இயங்குவதை உறுதிசெய்து மீண்டும் முயற்சிக்கவும்.",
-    "ButtonGotIt": "அறிந்துகொண்டேன்"
+    "Connect": "à®‡à®£à¯ˆà®•à¯à®•à®µà¯à®®à¯",
+    "HeaderConnectionFailure": "à®‡à®£à¯ˆà®ªà¯à®ªà¯ à®¤à¯‹à®²à¯à®µà®¿",
+    "MessageUnableToConnectToServer": "à®¤à¯‡à®°à¯à®¨à¯à®¤à¯†à®Ÿà¯à®•à¯à®•à®ªà¯à®ªà®Ÿà¯à®Ÿ à®šà¯‡à®µà¯ˆà®¯à®•à®¤à¯à®¤à¯à®Ÿà®©à¯ à®‡à®ªà¯à®ªà¯‹à®¤à¯ à®Žà®™à¯à®•à®³à®¾à®²à¯ à®‡à®£à¯ˆà®•à¯à®• à®®à¯à®Ÿà®¿à®¯à®µà®¿à®²à¯à®²à¯ˆ. à®‡à®¤à¯ à®‡à®¯à®™à¯à®•à¯à®µà®¤à¯ˆ à®‰à®±à¯à®¤à®¿à®šà¯†à®¯à¯à®¤à¯ à®®à¯€à®£à¯à®Ÿà¯à®®à¯ à®®à¯à®¯à®±à¯à®šà®¿à®•à¯à®•à®µà¯à®®à¯.",
+    "ButtonGotIt": "à®…à®±à®¿à®¨à¯à®¤à¯à®•à¯Šà®£à¯à®Ÿà¯‡à®©à¯"
   },
   {
     "lang": "te",
-    "HeaderConnectToServer": "సర్వర్‌కు కనెక్ట్ అవ్వండి",
-    "LabelServerHost": "హోస్ట్",
-    "LabelServerHostHelp": "192.168.1.100:8096 లేదా https://myserver.com",
-    "Connect": "కనెక్ట్ చేయండి",
-    "HeaderConnectionFailure": "కనెక్షన్ వైఫల్యం",
-    "MessageUnableToConnectToServer": "మేము ప్రస్తుతం ఎంచుకున్న సర్వర్‌కు కనెక్ట్ చేయలేకపోయాము. దయచేసి ఇది నడుస్తున్నట్లు నిర్ధారించుకోండి మరియు మళ్లీ ప్రయత్నించండి.",
-    "ButtonGotIt": "దొరికింది"
+    "HeaderConnectToServer": "à°¸à°°à±à°µà°°à±â€Œà°•à± à°•à°¨à±†à°•à±à°Ÿà± à°…à°µà±à°µà°‚à°¡à°¿",
+    "LabelServerHost": "à°¹à±‹à°¸à±à°Ÿà±",
+    "LabelServerHostHelp": "192.168.1.100:8096 à°²à±‡à°¦à°¾ https://myserver.com",
+    "Connect": "à°•à°¨à±†à°•à±à°Ÿà± à°šà±‡à°¯à°‚à°¡à°¿",
+    "HeaderConnectionFailure": "à°•à°¨à±†à°•à±à°·à°¨à± à°µà±ˆà°«à°²à±à°¯à°‚",
+    "MessageUnableToConnectToServer": "à°®à±‡à°®à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°Žà°‚à°šà±à°•à±à°¨à±à°¨ à°¸à°°à±à°µà°°à±â€Œà°•à± à°•à°¨à±†à°•à±à°Ÿà± à°šà±‡à°¯à°²à±‡à°•à°ªà±‹à°¯à°¾à°®à±. à°¦à°¯à°šà±‡à°¸à°¿ à°‡à°¦à°¿ à°¨à°¡à±à°¸à±à°¤à±à°¨à±à°¨à°Ÿà±à°²à± à°¨à°¿à°°à±à°§à°¾à°°à°¿à°‚à°šà±à°•à±‹à°‚à°¡à°¿ à°®à°°à°¿à°¯à± à°®à°³à±à°²à±€ à°ªà±à°°à°¯à°¤à±à°¨à°¿à°‚à°šà°‚à°¡à°¿.",
+    "ButtonGotIt": "à°¦à±Šà°°à°¿à°•à°¿à°‚à°¦à°¿"
   },
   {
     "lang": "th",
-    "HeaderConnectToServer": "เชื่อมต่อเซิฟเวอร์",
+    "HeaderConnectToServer": "à¹€à¸Šà¸·à¹ˆà¸­à¸¡à¸•à¹ˆà¸­à¹€à¸‹à¸´à¸Ÿà¹€à¸§à¸­à¸£à¹Œ",
     "LabelServerHost": null,
     "LabelServerHostHelp": null,
-    "Connect": "เชื่อมต่อ",
+    "Connect": "à¹€à¸Šà¸·à¹ˆà¸­à¸¡à¸•à¹ˆà¸­",
     "HeaderConnectionFailure": null,
     "MessageUnableToConnectToServer": null,
     "ButtonGotIt": null
   },
   {
     "lang": "tr",
-    "HeaderConnectToServer": "Sunucuya Bağlan",
+    "HeaderConnectToServer": "Sunucuya BaÄŸlan",
     "LabelServerHost": "Ana Bilgisayar",
     "LabelServerHostHelp": "192.168.1.100:8096 veya https://sunucum.com",
-    "Connect": "Bağlan",
-    "HeaderConnectionFailure": "Bağlantı Hatası",
-    "MessageUnableToConnectToServer": "Seçilen sunucuya şu anda bağlanamıyoruz. Lütfen sunucunun çalıştığından emin olun ve tekrar deneyin.",
-    "ButtonGotIt": "Anlaşıldı"
+    "Connect": "BaÄŸlan",
+    "HeaderConnectionFailure": "BaÄŸlantÄ± HatasÄ±",
+    "MessageUnableToConnectToServer": "SeÃ§ilen sunucuya ÅŸu anda baÄŸlanamÄ±yoruz. LÃ¼tfen sunucunun Ã§alÄ±ÅŸtÄ±ÄŸÄ±ndan emin olun ve tekrar deneyin.",
+    "ButtonGotIt": "AnlaÅŸÄ±ldÄ±"
   },
   {
     "lang": "ug",
@@ -855,23 +857,23 @@ const languages = [
   },
   {
     "lang": "uk",
-    "HeaderConnectToServer": "Підключення до сервера",
-    "LabelServerHost": "Хост",
-    "LabelServerHostHelp": "192.168.1.100:8096 або https://myserver.com",
-    "Connect": "Підключитись",
-    "HeaderConnectionFailure": "Помилка підключення",
-    "MessageUnableToConnectToServer": "Наразі неможливо підключитися до обраного сервера. Будь ласка, переконайтеся, що він запущений і спробуйте ще раз.",
-    "ButtonGotIt": "Зрозуміло"
+    "HeaderConnectToServer": "ÐŸÑ–Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð½Ñ Ð´Ð¾ ÑÐµÑ€Ð²ÐµÑ€Ð°",
+    "LabelServerHost": "Ð¥Ð¾ÑÑ‚",
+    "LabelServerHostHelp": "192.168.1.100:8096 Ð°Ð±Ð¾ https://myserver.com",
+    "Connect": "ÐŸÑ–Ð´ÐºÐ»ÑŽÑ‡Ð¸Ñ‚Ð¸ÑÑŒ",
+    "HeaderConnectionFailure": "ÐŸÐ¾Ð¼Ð¸Ð»ÐºÐ° Ð¿Ñ–Ð´ÐºÐ»ÑŽÑ‡ÐµÐ½Ð½Ñ",
+    "MessageUnableToConnectToServer": "ÐÐ°Ñ€Ð°Ð·Ñ– Ð½ÐµÐ¼Ð¾Ð¶Ð»Ð¸Ð²Ð¾ Ð¿Ñ–Ð´ÐºÐ»ÑŽÑ‡Ð¸Ñ‚Ð¸ÑÑ Ð´Ð¾ Ð¾Ð±Ñ€Ð°Ð½Ð¾Ð³Ð¾ ÑÐµÑ€Ð²ÐµÑ€Ð°. Ð‘ÑƒÐ´ÑŒ Ð»Ð°ÑÐºÐ°, Ð¿ÐµÑ€ÐµÐºÐ¾Ð½Ð°Ð¹Ñ‚ÐµÑÑ, Ñ‰Ð¾ Ð²Ñ–Ð½ Ð·Ð°Ð¿ÑƒÑ‰ÐµÐ½Ð¸Ð¹ Ñ– ÑÐ¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ñ‰Ðµ Ñ€Ð°Ð·.",
+    "ButtonGotIt": "Ð—Ñ€Ð¾Ð·ÑƒÐ¼Ñ–Ð»Ð¾"
   },
   {
     "lang": "ur_PK",
-    "HeaderConnectToServer": "سرور سے جڑیں",
-    "LabelServerHost": "میزبان",
-    "LabelServerHostHelp": "192.168.1.100:8096 یا https://myserver.com",
-    "Connect": "جڑیں",
-    "HeaderConnectionFailure": "کنکشن کی ناکامی",
-    "MessageUnableToConnectToServer": "ہم ابھی منتخب سرور سے رابطہ قائم کرنے سے قاصر ہیں۔ براہ کرم یقینی بنائیں کہ یہ چل رہا ہے اور دوبارہ کوشش کریں۔",
-    "ButtonGotIt": "یہ مل گیا"
+    "HeaderConnectToServer": "Ø³Ø±ÙˆØ± Ø³Û’ Ø¬Ú‘ÛŒÚº",
+    "LabelServerHost": "Ù…ÛŒØ²Ø¨Ø§Ù†",
+    "LabelServerHostHelp": "192.168.1.100:8096 ÛŒØ§ https://myserver.com",
+    "Connect": "Ø¬Ú‘ÛŒÚº",
+    "HeaderConnectionFailure": "Ú©Ù†Ú©Ø´Ù† Ú©ÛŒ Ù†Ø§Ú©Ø§Ù…ÛŒ",
+    "MessageUnableToConnectToServer": "ÛÙ… Ø§Ø¨Ú¾ÛŒ Ù…Ù†ØªØ®Ø¨ Ø³Ø±ÙˆØ± Ø³Û’ Ø±Ø§Ø¨Ø·Û Ù‚Ø§Ø¦Ù… Ú©Ø±Ù†Û’ Ø³Û’ Ù‚Ø§ØµØ± ÛÛŒÚºÛ” Ø¨Ø±Ø§Û Ú©Ø±Ù… ÛŒÙ‚ÛŒÙ†ÛŒ Ø¨Ù†Ø§Ø¦ÛŒÚº Ú©Û ÛŒÛ Ú†Ù„ Ø±ÛØ§ ÛÛ’ Ø§ÙˆØ± Ø¯ÙˆØ¨Ø§Ø±Û Ú©ÙˆØ´Ø´ Ú©Ø±ÛŒÚºÛ”",
+    "ButtonGotIt": "ÛŒÛ Ù…Ù„ Ú¯ÛŒØ§"
   },
   {
     "lang": "uz",
@@ -885,43 +887,43 @@ const languages = [
   },
   {
     "lang": "vi",
-    "HeaderConnectToServer": "Kết Nối Đến Máy Chủ",
-    "LabelServerHost": "Máy chủ",
-    "LabelServerHostHelp": "192.168.1.100:8096 hoặc https://myserver.com",
-    "Connect": "Kết nối",
-    "HeaderConnectionFailure": "Kế Nối Thất Bại",
-    "MessageUnableToConnectToServer": "Chúng tôi không thể kết nối với máy chủ đã chọn ngay bây giờ. Hãy đảm bảo rằng nó đang chạy và thử lại.",
-    "ButtonGotIt": "Hiểu rồi"
+    "HeaderConnectToServer": "Káº¿t Ná»‘i Äáº¿n MÃ¡y Chá»§",
+    "LabelServerHost": "MÃ¡y chá»§",
+    "LabelServerHostHelp": "192.168.1.100:8096 hoáº·c https://myserver.com",
+    "Connect": "Káº¿t ná»‘i",
+    "HeaderConnectionFailure": "Káº¿ Ná»‘i Tháº¥t Báº¡i",
+    "MessageUnableToConnectToServer": "ChÃºng tÃ´i khÃ´ng thá»ƒ káº¿t ná»‘i vá»›i mÃ¡y chá»§ Ä‘Ã£ chá»n ngay bÃ¢y giá». HÃ£y Ä‘áº£m báº£o ráº±ng nÃ³ Ä‘ang cháº¡y vÃ  thá»­ láº¡i.",
+    "ButtonGotIt": "Hiá»ƒu rá»“i"
   },
   {
     "lang": "zh-cn",
-    "HeaderConnectToServer": "连接到服务器",
-    "LabelServerHost": "主机",
-    "LabelServerHostHelp": "192.168.1.100:8096 或 https://myserver.com",
-    "Connect": "连接",
-    "HeaderConnectionFailure": "连接失败",
-    "MessageUnableToConnectToServer": "现在无法连接所选择的服务器，请确保该服务器目前正在运行。",
-    "ButtonGotIt": "知道了"
+    "HeaderConnectToServer": "è¿žæŽ¥åˆ°æœåŠ¡å™¨",
+    "LabelServerHost": "ä¸»æœº",
+    "LabelServerHostHelp": "192.168.1.100:8096 æˆ– https://myserver.com",
+    "Connect": "è¿žæŽ¥",
+    "HeaderConnectionFailure": "è¿žæŽ¥å¤±è´¥",
+    "MessageUnableToConnectToServer": "çŽ°åœ¨æ— æ³•è¿žæŽ¥æ‰€é€‰æ‹©çš„æœåŠ¡å™¨ï¼Œè¯·ç¡®ä¿è¯¥æœåŠ¡å™¨ç›®å‰æ­£åœ¨è¿è¡Œã€‚",
+    "ButtonGotIt": "çŸ¥é“äº†"
   },
   {
     "lang": "zh-hk",
-    "HeaderConnectToServer": "連接至伺服器",
-    "LabelServerHost": "主機",
-    "LabelServerHostHelp": "192.168.1.100:8096 或是 https://myserver.com",
-    "Connect": "連接",
-    "HeaderConnectionFailure": "連接失敗",
-    "MessageUnableToConnectToServer": "無法連接到所選的伺服器，請先檢查伺服器的運作情況。",
-    "ButtonGotIt": "了解"
+    "HeaderConnectToServer": "é€£æŽ¥è‡³ä¼ºæœå™¨",
+    "LabelServerHost": "ä¸»æ©Ÿ",
+    "LabelServerHostHelp": "192.168.1.100:8096 æˆ–æ˜¯ https://myserver.com",
+    "Connect": "é€£æŽ¥",
+    "HeaderConnectionFailure": "é€£æŽ¥å¤±æ•—",
+    "MessageUnableToConnectToServer": "ç„¡æ³•é€£æŽ¥åˆ°æ‰€é¸çš„ä¼ºæœå™¨ï¼Œè«‹å…ˆæª¢æŸ¥ä¼ºæœå™¨çš„é‹ä½œæƒ…æ³ã€‚",
+    "ButtonGotIt": "äº†è§£"
   },
   {
     "lang": "zh-tw",
-    "HeaderConnectToServer": "連接至伺服器",
-    "LabelServerHost": "主機",
-    "LabelServerHostHelp": "192.168.1.100:8096 或是 https://myserver.com",
-    "Connect": "連線",
-    "HeaderConnectionFailure": "連接失敗",
-    "MessageUnableToConnectToServer": "無法連上所選的伺服器，請確保伺服器正在運作中。",
-    "ButtonGotIt": "我知道了"
+    "HeaderConnectToServer": "é€£æŽ¥è‡³ä¼ºæœå™¨",
+    "LabelServerHost": "ä¸»æ©Ÿ",
+    "LabelServerHostHelp": "192.168.1.100:8096 æˆ–æ˜¯ https://myserver.com",
+    "Connect": "é€£ç·š",
+    "HeaderConnectionFailure": "é€£æŽ¥å¤±æ•—",
+    "MessageUnableToConnectToServer": "ç„¡æ³•é€£ä¸Šæ‰€é¸çš„ä¼ºæœå™¨ï¼Œè«‹ç¢ºä¿ä¼ºæœå™¨æ­£åœ¨é‹ä½œä¸­ã€‚",
+    "ButtonGotIt": "æˆ‘çŸ¥é“äº†"
   },
   {
     "lang": "zu",

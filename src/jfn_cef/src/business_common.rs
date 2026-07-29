@@ -1,8 +1,8 @@
-//! Shared helpers for the three `business_*` modules.
+﻿//! Shared helpers for the three `business_*` modules.
 //!
 //! Two groups, separated by the dividers below:
 //!   1. Generic CEF/Rust helpers — could lift into a `cef-rs-helpers` crate.
-//!   2. App-specific dispatch — Jellium Desktop config wiring.
+//!   2. App-specific dispatch — Jellyfin Desktop config wiring.
 
 use std::ffi::CString;
 

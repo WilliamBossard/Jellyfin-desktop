@@ -1,4 +1,4 @@
-//! Thin FFI wrappers around `Inner`. Each function looks up the `Arc<Inner>`
+﻿//! Thin FFI wrappers around `Inner`. Each function looks up the `Arc<Inner>`
 //! from a raw `JfnCefLayer*` and forwards to the corresponding `Inner`
 //! method. Caller-visible state lives in `Inner`; this layer holds no logic.
 

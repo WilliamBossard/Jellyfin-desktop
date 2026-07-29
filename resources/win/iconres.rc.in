@@ -1,4 +1,4 @@
-#include <winver.h>
+﻿#include <winver.h>
 
 IDI_ICON1 ICON "@CMAKE_SOURCE_DIR@/resources/win/jellyfin.ico"
 
@@ -16,11 +16,11 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "CompanyName",      "Jellium"
-            VALUE "FileDescription",  "Jellium Desktop"
+            VALUE "FileDescription",  "Jellyfin Desktop"
             VALUE "FileVersion",      "@APP_VERSION_FULL@"
-            VALUE "InternalName",     "jellium-desktop"
-            VALUE "OriginalFilename", "jellium-desktop.exe"
-            VALUE "ProductName",      "Jellium Desktop"
+            VALUE "InternalName",     "jellyfin-desktop"
+            VALUE "OriginalFilename", "jellyfin-desktop.exe"
+            VALUE "ProductName",      "Jellyfin Desktop"
             VALUE "ProductVersion",   "@APP_VERSION_FULL@"
         END
     END

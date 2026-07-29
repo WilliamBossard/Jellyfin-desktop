@@ -1,4 +1,4 @@
-//! Process entry point. [`jfn_app_main`] owns the full main loop and
+﻿//! Process entry point. [`jfn_app_main`] owns the full main loop and
 //! returns the exit code.
 
 use std::ffi::{CStr, CString, c_char, c_int};
@@ -53,7 +53,7 @@ fn normalize_passthrough(s: &str) -> String {
 
 fn print_version() {
     println!(
-        "jellium-desktop {}\n\nCEF {}\n",
+        "jellyfin-desktop {}\n\nCEF {}\n",
         APP_VERSION_FULL,
         cef_version()
     );
@@ -76,7 +76,7 @@ fn init_logging(log_file: Option<String>, log_level: &str) {
     };
     jfn_logging::jfn_log_init(&log_path, &filter);
 
-    tracing::info!(target: "Main", "jellium-desktop {APP_VERSION_FULL}");
+    tracing::info!(target: "Main", "jellyfin-desktop {APP_VERSION_FULL}");
     tracing::info!(target: "Main", "CEF {}", cef_version());
     if !log_path.is_empty() {
         tracing::info!(target: "Main", "Log file: {log_path}");
@@ -227,7 +227,7 @@ struct MpvInitOptions<'a> {
 fn init_mpv_handle(opts: MpvInitOptions<'_>) -> *mut jfn_mpv::sys::mpv_handle {
     let geometry_c = opts.boot_geometry.map(cs);
     let hwdec_c = cs(opts.hwdec);
-    let user_agent_c = cs(&format!("JelliumDesktop/{}", APP_VERSION_FULL));
+    let user_agent_c = cs(&format!("JellyfinDesktop/{}", APP_VERSION_FULL));
     let passthrough_c = cs(opts.audio_passthrough);
     let channels_c = cs(opts.audio_channels);
     let mpv_log_level_c = cs(opts.mpv_log_level);
@@ -268,9 +268,9 @@ fn wait_for_vo_window() -> bool {
     let mut fatal = false;
 
     // The platform owns the wait strategy; this pump owns all mpv event
-    // handling. It drains everything mpv has queued without blocking —
+    // handling. It drains everything mpv has queued without blocking �
     // consume_vo_event folds property changes into the ingest layer; a
-    // fatal event bails out of jfn_app_main — then, when the platform's
+    // fatal event bails out of jfn_app_main � then, when the platform's
     // strategy is the generic blocking wait (`may_block`), parks in mpv
     // until the next wakeup.
     plat().mpv_host().run_vo_wait(&mut |may_block| {
@@ -341,7 +341,7 @@ fn publish_device_profile(mpv_raw: *mut jfn_mpv::sys::mpv_handle) {
     let profile = jfn_jellyfin::build_device_profile(
         &decoders,
         &demuxers,
-        "Jellium Desktop",
+        "Jellyfin Desktop",
         APP_VERSION_FULL,
         force,
     );
@@ -414,7 +414,7 @@ fn shutdown_runtime(manager_thread: std::thread::JoinHandle<()>) {
     // Join before any teardown so no posted task outlives the layer free below.
     let _ = manager_thread.join();
 
-    // Sever host↔mpv links that could deadlock the teardown below once
+    // Sever host?mpv links that could deadlock the teardown below once
     // CEF threads start dying.
     plat().mpv_host().detach();
 
@@ -521,12 +521,19 @@ fn init_main_browser(
     jfn_cef::business_web::jfn_web_init(main_layer);
 
     let server_url = jfn_config::server_url();
-    tracing::info!(target: "Main", "[FLOW] CreateBrowser(main) url={server_url}");
+    // If no server is configured yet, load about:blank so Jellyfin Web doesn't
+    // show its own server-selection screen before the overlay is ready.
+    let startup_url = if server_url.is_empty() {
+        "about:blank".to_string()
+    } else {
+        server_url.clone()
+    };
+    tracing::info!(target: "Main", "[FLOW] CreateBrowser(main) url={startup_url}");
     unsafe {
         jfn_cef::client::jfn_cef_layer_create(
             main_layer,
-            server_url.as_ptr() as *const _,
-            server_url.len(),
+            startup_url.as_ptr() as *const _,
+            startup_url.len(),
         );
     }
     tracing::info!(target: "Main", "[FLOW] CreateBrowser(main) call returned");
@@ -568,7 +575,7 @@ pub fn jfn_app_main() -> c_int {
     
     init_logging(opts.log_file, &opts.log_level);
     
-    crate::updater::check_and_update("WilliamBossard/Jellyfin-desktop");
+    jfn_cef::updater::check_and_update("WilliamBossard/Jellyfin-desktop");
 
     crate::platform_install::install_from_cli(&cli);
 
@@ -730,7 +737,7 @@ fn vo_ready(need_max: &mut bool) -> bool {
 }
 
 // =====================================================================
-// run_with_cef body — Rust port
+// run_with_cef body � Rust port
 // =====================================================================
 
 const LOG_CEF: u8 = 2;
@@ -787,14 +794,14 @@ extern "C" fn h_theme_set_mpv_bg(hex: *const c_char) {
 
 fn h_shutdown_wake_manager() {
     // Runs inline on whichever thread called jfn_shutdown_initiate (signal
-    // handler, CEF dispatch, input thread, …). Signal-only by contract: just
+    // handler, CEF dispatch, input thread, �). Signal-only by contract: just
     // wake the manager, which orchestrates the close/drain off-thread. Never
-    // close a browser or wake the main loop here — that would reenter CEF or
+    // close a browser or wake the main loop here � that would reenter CEF or
     // race the drain.
     crate::manager::jfn_manager_notify_shutdown();
 }
 
-/// Owns the run_with_cef body — invoked once by `jfn_app_main`.
+/// Owns the run_with_cef body � invoked once by `jfn_app_main`.
 unsafe fn run_with_cef(ba: &BootArgs) -> c_int {
     // 2. Platform init (PlatformScope). Cleanup happens in shutdown_runtime.
     let mpv_raw = jfn_mpv::boot::jfn_mpv_handle_get();
@@ -812,7 +819,7 @@ unsafe fn run_with_cef(ba: &BootArgs) -> c_int {
         plat().set_theme_color(0x101010);
     }
 
-    // 4. Build device profile. Must run after VO-init wait — sync mpv API
+    // 4. Build device profile. Must run after VO-init wait � sync mpv API
     //    calls would deadlock against core_thread on macOS.
     publish_device_profile(mpv_raw);
 
@@ -838,7 +845,7 @@ unsafe fn run_with_cef(ba: &BootArgs) -> c_int {
     }
     tracing::info!(target: "Main", "Main browser loaded");
 
-    tracing::info!(target: "Main", "[FLOW] Running — about to enter run_main_loop");
+    tracing::info!(target: "Main", "[FLOW] Running � about to enter run_main_loop");
 
     // 15. Park the main thread until the manager has closed + drained every
     //     browser, at which point it calls plat().wake_main_loop() to release
@@ -848,7 +855,7 @@ unsafe fn run_with_cef(ba: &BootArgs) -> c_int {
     //     shutdown signal (routed through the manager), never by transient
     //     browser-close state when the overlay resets the main layer.
     plat().run_main_loop();
-    tracing::info!(target: "Main", "[FLOW] run_main_loop returned — browsers drained, running teardown");
+    tracing::info!(target: "Main", "[FLOW] run_main_loop returned � browsers drained, running teardown");
 
     shutdown_runtime(manager_thread);
 

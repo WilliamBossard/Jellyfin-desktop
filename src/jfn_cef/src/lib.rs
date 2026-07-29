@@ -31,3 +31,5 @@ pub use ffi::*;
 pub const APP_VERSION: &str = env!("JFN_APP_VERSION");
 pub const APP_VERSION_FULL: &str = env!("JFN_APP_VERSION_FULL");
 pub use version::cef_version;
+
+pub mod updater;

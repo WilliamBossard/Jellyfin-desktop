@@ -1,4 +1,4 @@
-//! MPRIS direct sink. Owns its own thread that runs a zbus blocking
+﻿//! MPRIS direct sink. Owns its own thread that runs a zbus blocking
 //! Connection. Receives PlaybackEvents through a channel, updates the
 //! content/view state, and emits PropertiesChanged + Seeked signals.
 //!
@@ -22,7 +22,7 @@ use crate::projection;
 use jfn_playback::{MediaMetadata, PlaybackEvent, PlaybackEventKind, PlaybackSnapshot};
 
 const MPRIS_PATH: &str = "/org/mpris/MediaPlayer2";
-const BASE_SERVICE_NAME: &str = "org.mpris.MediaPlayer2.JelliumDesktop";
+const BASE_SERVICE_NAME: &str = "org.mpris.MediaPlayer2.JellyfinDesktop";
 
 // ============================================================================
 // Content + projected view
@@ -163,7 +163,7 @@ fn insert_value(m: &mut HashMap<String, OwnedValue>, key: &str, v: Value<'_>) {
 fn metadata_to_dict(meta: &MediaMetadata) -> HashMap<String, OwnedValue> {
     let mut m = HashMap::new();
     // mpris:trackid is required by spec.
-    if let Ok(track_id) = ObjectPath::try_from("/net/nullsum/JelliumDesktop/track/1") {
+    if let Ok(track_id) = ObjectPath::try_from("/net/nullsum/JellyfinDesktop/track/1") {
         insert_value(&mut m, "mpris:trackid", Value::from(track_id));
     }
     if meta.duration_us > 0 {
@@ -231,7 +231,7 @@ impl Root {
 
     #[zbus(property)]
     fn identity(&self) -> &str {
-        "Jellium Desktop"
+        "Jellyfin Desktop"
     }
     #[zbus(property)]
     fn can_quit(&self) -> bool {
@@ -564,7 +564,7 @@ fn emit_properties_changed(conn: &Connection, names: &[&str], view: &View) {
 // ============================================================================
 
 /// Spawn the MPRIS sink thread. `service_suffix` is appended to the base
-/// service name (`org.mpris.MediaPlayer2.JelliumDesktop<suffix>`).
+/// service name (`org.mpris.MediaPlayer2.JellyfinDesktop<suffix>`).
 /// No-op if already running.
 pub(crate) fn start(service_suffix: &str) {
     let mut slot = sink_slot().lock();

@@ -248,52 +248,61 @@ document.addEventListener('keydown', (e) => {
         button.style.visibility = 'visible';
         address.focus();
         updateButtonState();
-
-        // Discover servers and populate UI
-        window._nativeFindServersResult = function(servers) {
-            try {
-                if (servers && Array.isArray(servers) && servers.length > 0) {
-                    const container = document.getElementById('discovered-servers');
-                    const titleEl = document.getElementById('discovered-servers-title');
-                    const listEl = document.getElementById('discovered-servers-list');
-                    
-                    titleEl.innerText = (window.overlayStrings && window.overlayStrings.DiscoveredServers) || 'Discovered Servers';
-                    listEl.innerHTML = '';
-                    
-                    servers.forEach(server => {
-                        const card = document.createElement('div');
-                        card.className = 'server-card';
-                        
-                        const nameEl = document.createElement('div');
-                        nameEl.className = 'server-card-name';
-                        nameEl.innerText = server.Name || server.name || 'Jellyfin Server';
-                        
-                        const addrEl = document.createElement('div');
-                        addrEl.className = 'server-card-address';
-                        addrEl.innerText = server.Address || server.address || '';
-                        
-                        card.appendChild(nameEl);
-                        card.appendChild(addrEl);
-                        
-                        card.onclick = () => {
-                            address.value = server.Address || server.address || '';
-                            updateButtonState();
-                            startConnecting();
-                        };
-                        
-                        listEl.appendChild(card);
-                    });
-                    
-                    container.style.display = 'flex';
-                    container.style.visibility = 'visible';
-                }
-            } catch (e) {
-                console.error("Failed to parse discovered servers:", e);
-            }
-        };
-
-        if (window.jmpNative && window.jmpNative.findServers) {
-            window.jmpNative.findServers(1000);
-        }
     }
 })();
+
+// Discover servers and populate UI (always defined so it can run if needed)
+window._nativeFindServersResult = function(servers) {
+    try {
+        if (servers && Array.isArray(servers) && servers.length > 0) {
+            const container = document.getElementById('discovered-servers');
+            const titleEl = document.getElementById('discovered-servers-title');
+            const listEl = document.getElementById('discovered-servers-list');
+            
+            titleEl.innerText = (window.overlayStrings && window.overlayStrings.DiscoveredServers) || 'Discovered Servers';
+            listEl.innerHTML = '';
+            
+            let count = 0;
+            servers.forEach(server => {
+                const sAddr = server.Address || server.address || '';
+                // Ne pas proposer le serveur s'il est déjà enregistré (ou en cours de connexion)
+                if (savedServerUrl && sAddr && savedServerUrl.toLowerCase() === sAddr.toLowerCase()) return;
+
+                const card = document.createElement('div');
+                card.className = 'server-card';
+                
+                const nameEl = document.createElement('div');
+                nameEl.className = 'server-card-name';
+                nameEl.innerText = server.Name || server.name || 'Jellyfin Server';
+                
+                const addrEl = document.createElement('div');
+                addrEl.className = 'server-card-address';
+                addrEl.innerText = sAddr;
+                
+                card.appendChild(nameEl);
+                card.appendChild(addrEl);
+                
+                card.onclick = () => {
+                    const address = document.getElementById('address');
+                    address.value = sAddr;
+                    updateButtonState();
+                    startConnecting();
+                };
+                
+                listEl.appendChild(card);
+                count++;
+            });
+            
+            if (count > 0) {
+                container.style.display = 'flex';
+                container.style.visibility = 'visible';
+            }
+        }
+    } catch (e) {
+        console.error("Failed to parse discovered servers:", e);
+    }
+};
+
+if (window.jmpNative && window.jmpNative.findServers) {
+    window.jmpNative.findServers(1000);
+}

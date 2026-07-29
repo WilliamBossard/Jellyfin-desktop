@@ -1,4 +1,4 @@
-# Windows-specific recipes (imported by top-level justfile)
+﻿# Windows-specific recipes (imported by top-level justfile)
 #
 # Recipes run under PowerShell 7 so the dev/windows/*.ps1 scripts
 # (which use PS 7+ syntax such as `&&`) parse correctly. just's default
@@ -19,7 +19,7 @@ build: deps
 [group('run')]
 [windows]
 run *args: build
-    $env:RUST_BACKTRACE = 'full'; & 'build/jellium-desktop.exe' {{args}} 2>&1 | Tee-Object -FilePath build/stderr.log
+    $env:RUST_BACKTRACE = 'full'; & 'build/jellyfin-desktop.exe' {{args}} 2>&1 | Tee-Object -FilePath build/stderr.log
 
 # Run the standalone mpv CLI built from the submodule (forwards args)
 [group('run')]

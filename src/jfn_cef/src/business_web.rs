@@ -284,13 +284,39 @@ fn handle_message(message: BrowserMessage) -> bool {
             std::thread::spawn(move || {
                 let servers = jfn_jellyfin::discovery::discover_servers(timeout_ms);
                 let json = serde_json::to_string(&servers).unwrap_or_else(|_| "[]".to_string());
-                let js = format!("window._nativeFindServersResult('{}');", json);
+                let js = format!("window._nativeFindServersResult({});", json);
                 frame.execute_java_script(
                     Some(&cef::CefString::from(js.as_str())),
                     Some(&cef::CefString::from("native-shim.js")),
                     0,
                 );
             });
+        }
+        return true;
+    }
+
+    if message.name() == "getUpdateInfo" {
+        if let Some(frame) = message.main_frame() {
+            if let Some(update) = crate::updater::pending_update() {
+                let js = format!(
+                    "window._nativeUpdateInfoResult({:?}, {:?}, {:?});",
+                    update.version, update.download_url, update.asset_name
+                );
+                frame.execute_java_script(
+                    Some(&cef::CefString::from(js.as_str())),
+                    Some(&cef::CefString::from("native-shim.js")),
+                    0,
+                );
+            }
+        }
+        return true;
+    }
+
+    if message.name() == "installUpdate" {
+        if let Some(args) = args {
+            let url = list_string(args, 0);
+            let asset = list_string(args, 1);
+            crate::updater::perform_update(&url, &asset);
         }
         return true;
     }

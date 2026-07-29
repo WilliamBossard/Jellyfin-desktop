@@ -1,4 +1,4 @@
-//! Per-user filesystem locations.
+﻿//! Per-user filesystem locations.
 //!
 //! - Linux: XDG Base Directory (config/cache/state) with `$HOME` fallback.
 //! - macOS: `~/.config` for config (matches existing installs), `~/Library`
@@ -15,8 +15,8 @@ use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::sync::{Mutex, MutexGuard, OnceLock, PoisonError};
 
-const APP_DIR_NAME: &str = "jellium-desktop";
-const LOG_FILE_NAME: &str = "jellium-desktop.log";
+const APP_DIR_NAME: &str = "jellyfin-desktop";
+const LOG_FILE_NAME: &str = "jellyfin-desktop.log";
 
 #[derive(Default)]
 struct Overrides {

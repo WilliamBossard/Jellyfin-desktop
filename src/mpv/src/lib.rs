@@ -1,4 +1,4 @@
-//! Safe Rust bindings for libmpv (`mpv/client.h`).
+﻿//! Safe Rust bindings for libmpv (`mpv/client.h`).
 //!
 //! Scope is the control plane: handle lifecycle, options, properties,
 //! commands, events, logging. Render APIs (`mpv/render.h`,

@@ -1,4 +1,4 @@
-//! systemd-logind idle inhibitor via zbus.
+﻿//! systemd-logind idle inhibitor via zbus.
 //!
 //! Holds an OwnedFd returned by org.freedesktop.login1.Manager.Inhibit; the
 //! inhibit lasts as long as the fd is open. Replacing the inhibit closes the
@@ -56,7 +56,7 @@ pub fn set(level: u32) {
         "/org/freedesktop/login1",
         Some("org.freedesktop.login1.Manager"),
         "Inhibit",
-        &(what, "Jellium Desktop", "Media playback", "block"),
+        &(what, "Jellyfin Desktop", "Media playback", "block"),
     );
     match reply {
         Ok(msg) => match msg.body().deserialize::<ZOwnedFd>() {
