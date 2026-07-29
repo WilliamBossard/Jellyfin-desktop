@@ -1,6 +1,6 @@
 [Setup]
 AppName=Jellyfin Desktop
-AppVersion=1.0.0
+AppVersion=1.0.1
 DefaultDirName={autopf}\Jellyfin Desktop
 DefaultGroupName=Jellyfin Desktop
 UninstallDisplayIcon={app}\jellyfin-desktop.exe
@@ -22,4 +22,5 @@ Name: "{autodesktop}\Jellyfin Desktop"; Filename: "{app}\jellyfin-desktop.exe"; 
 
 [Run]
 Filename: "{app}\jellyfin-desktop.exe"; Description: "Lancer Jellyfin Desktop"; Flags: nowait postinstall skipifsilent
+
 
