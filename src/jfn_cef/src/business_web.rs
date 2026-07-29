@@ -407,7 +407,13 @@ fn handle_message(message: BrowserMessage) -> bool {
         "toggleFullscreen" => {
             jfn_platform_abi::get().toggle_fullscreen();
             true
-        }
+        },
+        "setFullscreen" => {
+            if let Some(arg) = msg.argument_list.get_bool(0) {
+                jfn_platform_abi::get().set_fullscreen(arg);
+            }
+            true
+        },
         "saveServerUrl" => with_args(args, |a| {
             jfn_config::set_server_url(&list_string(a, 0));
             jfn_config::settings_save_async();

@@ -32,7 +32,8 @@
 (function() {
     console.debug('[Media] Installing native shim...');
 
-    window._isFullscreen = false;
+    window._isFullscreen = _savedSettings.initialFullscreen || false;
+    window._userFullscreen = _savedSettings.initialFullscreen || false;
 
     document.addEventListener('fullscreenchange', () => {
         const fullscreen = !!document.fullscreenElement;
@@ -46,6 +47,11 @@
     });
 
     document.addEventListener('keydown', (e) => {
+        if (e.key === 'F11') {
+            e.preventDefault();
+            window._userFullscreen = !window._isFullscreen;
+            window.jmpNative.toggleFullscreen();
+        }
         if (e.key === 'Escape' && window._isFullscreen) {
             window.jmpNative.toggleFullscreen();
         }
@@ -96,6 +102,7 @@
     }
 
     const _savedSettings = JSON.parse('__SETTINGS_JSON__');
+    document.documentElement.style.zoom = _savedSettings.uiZoom || '1.0';
     
     if (!localStorage.getItem('displaylanguage') || localStorage.getItem('displaylanguage') === 'auto') {
         localStorage.setItem('displaylanguage', _savedSettings.sysLocale || 'auto');
@@ -156,6 +163,14 @@
             advanced: [
                 { key: 'hideScrollbar', displayName: 'Hide Scrollbar', help: 'Hide scrollbars throughout the app. Scrolling with the wheel, trackpad, and keyboard still works. Requires restart.' },
                 { key: 'deviceName', displayName: 'Device Name', help: 'Identifies this machine to the server. Leave blank to use the system hostname.', inputType: 'text', maxLength: 64, placeholder: _savedSettings.deviceNameDefault },
+                { key: 'uiZoom', displayName: 'Interface Zoom', help: 'Scale the UI for HTPC or TV mode usage.', options: [
+                    { value: '0.5', title: '50%' },
+                    { value: '0.75', title: '75%' },
+                    { value: '1.0', title: '100% (Default)' },
+                    { value: '1.25', title: '125%' },
+                    { value: '1.5', title: '150%' },
+                    { value: '2.0', title: '200%' }
+                ] },
                 { key: 'logLevel', displayName: 'Log Level', help: 'Set the application log verbosity level.', options: [
                     { value: '', title: 'Default (Info)' },
                     { value: 'verbose', title: 'Verbose' },

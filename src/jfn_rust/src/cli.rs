@@ -1,4 +1,4 @@
-﻿//! Argv parser for jellyfin-desktop, built on clap. `--version` is a plain
+//! Argv parser for jellyfin-desktop, built on clap. `--version` is a plain
 //! `bool` intercepted by `app::jfn_app_main` after parsing, so the libmpv
 //! version probe the version string needs only fires when `--version` is
 //! actually requested.
@@ -13,7 +13,7 @@ const ENV_CACHE_DIR: &str = "JELLYFIN_DESKTOP_CACHE_DIR";
 #[cfg(test)]
 const ENV_BACKED: &[&str] = &[ENV_LOG_LEVEL, ENV_LOG_FILE, ENV_CONFIG_DIR, ENV_CACHE_DIR];
 
-/// jellyfin-desktop — Jellyfin native desktop client.
+/// jellyfin-desktop � Jellyfin native desktop client.
 ///
 /// The four path/logging options also read a `JELLYFIN_DESKTOP_*` environment
 /// variable; an explicit flag always wins over the variable. Each option is
@@ -69,6 +69,10 @@ pub struct Cli {
     /// Disable CEF GPU compositing.
     #[arg(long, action = ArgAction::SetTrue)]
     pub disable_gpu_compositing: bool,
+
+    /// Start the application in fullscreen mode
+    #[arg(long)]
+    pub fullscreen: bool,
 
     #[cfg(target_os = "linux")]
     #[command(flatten)]
