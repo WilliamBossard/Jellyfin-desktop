@@ -126,7 +126,7 @@ pub fn jfn_cef_initialize() -> bool {
         disable_signal_handlers: 1,
         log_severity: log_severity_from_int(cfg_severity),
         remote_debugging_port: cfg_port,
-        locale: CefString::from("en-US"),
+        locale: CefString::from(sys_locale::get_locale().unwrap_or_else(|| "en-US".to_string()).as_str()), accept_language_list: CefString::from(sys_locale::get_locale().unwrap_or_else(|| "en-US".to_string()).as_str()),
         user_agent: CefString::from(concat!(
             "Mozilla/5.0 jellium-desktop/",
             env!("JFN_APP_VERSION")
