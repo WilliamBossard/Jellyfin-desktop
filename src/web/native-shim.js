@@ -456,7 +456,7 @@
                 'fileinput', 'filedownload', 'displaylanguage', 'htmlaudioautoplay',
                 'htmlvideoautoplay', 'externallinks', 'multiserver',
                 'fullscreenchange', 'remotevideo', 'displaymode',
-                'exitmenu', 'clientsettings'
+                'exitmenu', 'clientsettings', 'servermanagement'
             ];
             return features.includes(command.toLowerCase());
         },
