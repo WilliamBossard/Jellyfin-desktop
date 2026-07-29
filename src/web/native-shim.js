@@ -464,7 +464,14 @@
         exit() { window.api.system.exit(); }
     };
 
-    window.initCompleted = Promise.resolve();
+    
+      setTimeout(() => {
+          if (window.jmpNative && window.jmpNative.getUpdateInfo) {
+              window.jmpNative.getUpdateInfo();
+          }
+      }, 5000);
+      window.initCompleted = Promise.resolve();
+
     window.apiPromise = Promise.resolve(window.api);
 
     function sendThemeColor(color) {
