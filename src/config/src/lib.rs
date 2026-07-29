@@ -50,6 +50,7 @@ struct SettingsData {
     hwdec: String,
     audio_passthrough: String,
     audio_channels: String,
+    audio_language: String,
     log_level: String,
     device_name: String,
     window: JfnWindowGeometry,
@@ -68,6 +69,7 @@ impl Default for SettingsData {
             hwdec: String::new(),
             audio_passthrough: String::new(),
             audio_channels: String::new(),
+            audio_language: String::new(),
             log_level: String::new(),
             device_name: String::new(),
             window: JfnWindowGeometry::default(),
@@ -476,6 +478,7 @@ string_accessors!(server_url, set_server_url, server_url);
 string_accessors!(hwdec, set_hwdec, hwdec);
 string_accessors!(audio_passthrough, set_audio_passthrough, audio_passthrough);
 string_accessors!(audio_channels, set_audio_channels, audio_channels);
+string_accessors!(audio_language, set_audio_language, audio_language);
 string_accessors!(log_level, set_log_level, log_level);
 
 pub fn device_name() -> String {

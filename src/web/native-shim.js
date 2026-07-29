@@ -117,7 +117,8 @@
             audio: {
                 audioPassthrough: _savedSettings.audioPassthrough || '',
                 audioExclusive: _savedSettings.audioExclusive || false,
-                audioChannels: _savedSettings.audioChannels || ''
+                audioChannels: _savedSettings.audioChannels || '',
+                audioLanguage: _savedSettings.audioLanguage || ''
             },
             transcode: {
                 forceTranscoding: !!_savedSettings.forceTranscoding
@@ -138,6 +139,12 @@
                 { key: 'audioPassthrough', displayName: 'Audio Passthrough', help: 'Comma-separated list of codecs to pass through to the audio device (e.g. ac3,eac3,dts-hd,truehd). Leave empty to disable.', inputType: 'textarea' },
                 { key: 'audioExclusive', displayName: 'Exclusive Audio Output', help: 'Take exclusive control of the audio device during playback. May reduce latency but prevents other apps from playing audio.' },
                 { key: 'audioChannels', displayName: 'Audio Channel Layout', help: 'Force a specific channel layout. Leave empty for auto-detection.', options: [
+                    { name: 'Auto', value: '' },
+                    { name: 'Stereo', value: 'stereo' },
+                    { name: '5.1', value: '5.1' },
+                    { name: '7.1', value: '7.1' }
+                ] },
+                { key: 'audioLanguage', displayName: 'Preferred Audio Languages', help: 'Comma-separated list of audio language codes (e.g. ja,en,fr).', inputType: 'text', maxLength: 128 },
                     { value: '', title: 'Auto' },
                     { value: 'stereo', title: 'Stereo' },
                     { value: '5.1', title: '5.1 Surround' },

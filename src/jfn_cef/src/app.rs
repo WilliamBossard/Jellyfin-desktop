@@ -74,7 +74,7 @@ wrap_app! {
                 "disable-notifications",
                 "disable-spell-checking",
                 "no-pings",
-                "bwsi",
+                "bwsi", "no-proxy-server",
             ] {
                 cl.append_switch(Some(&CefString::from(sw)));
             }

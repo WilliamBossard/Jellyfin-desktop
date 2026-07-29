@@ -1,5 +1,5 @@
-ï»¿//! End-to-end mpv handle bring-up: create, apply defaults + per-arg
-//! options, initialize, and set log level â€” exposed as a single
+//! End-to-end mpv handle bring-up: create, apply defaults + per-arg
+//! options, initialize, and set log level — exposed as a single
 //! `jfn_mpv_handle_init` entry point.
 //!
 //! Rust owns the lifetime: a process-global slot retains the
@@ -49,6 +49,7 @@ pub struct JfnMpvBoot {
     pub audio_passthrough: *const c_char,
     pub audio_exclusive: bool,
     pub audio_channels: *const c_char,
+    pub audio_language: *const c_char,
     /// Optional `<W>x<H>[+x+y]` geometry string from saved settings.
     pub geometry: *const c_char,
     pub force_window_position: bool,
@@ -115,8 +116,8 @@ fn apply_defaults(
 ) -> crate::error::Result<()> {
     let set = |name: &str, value: &str| set_option_or_skip(handle, name, value);
 
-    // OSD/OSC off â€” CEF overlay handles all UI.
-    set("osd-level", "0")?;
+    // OSD/OSC off — CEF overlay handles all UI.
+    set("demuxer-max-bytes", "300000000")?;`n    set("demuxer-max-back-bytes", "50000000")?;`n    set("osd-level", "0")?;
     set("osc", "no")?;
     set("display-tags", "")?;
 
@@ -267,7 +268,7 @@ pub unsafe fn jfn_mpv_handle_init(boot: *const JfnMpvBoot) -> *mut sys::mpv_hand
 }
 
 /// Tear down the handle owned by [`jfn_mpv_handle_init`].
-/// Idempotent â€” repeated calls are no-ops.
+/// Idempotent — repeated calls are no-ops.
 ///
 /// On macOS the caller must invoke this off the main thread (mpv's VO
 /// uninit does `DispatchQueue.main.sync`).
