@@ -117,7 +117,9 @@ fn apply_defaults(
     let set = |name: &str, value: &str| set_option_or_skip(handle, name, value);
 
     // OSD/OSC off --- CEF overlay handles all UI.
-    set("demuxer-max-bytes", "300000000")?;`n    set("demuxer-max-back-bytes", "50000000")?;`n    set("osd-level", "0")?;
+    set("demuxer-max-bytes", "300000000")?;
+    set("demuxer-max-back-bytes", "50000000")?;
+    set("osd-level", "0")?;
     set("osc", "no")?;
     set("display-tags", "")?;
 
