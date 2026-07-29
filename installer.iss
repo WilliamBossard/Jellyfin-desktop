@@ -1,6 +1,6 @@
 [Setup]
 AppName=Jellyfin Desktop
-AppVersion=1.1.2
+AppVersion=1.0.0
 DefaultDirName={autopf}\Jellyfin Desktop
 DefaultGroupName=Jellyfin Desktop
 UninstallDisplayIcon={app}\jellyfin-desktop.exe

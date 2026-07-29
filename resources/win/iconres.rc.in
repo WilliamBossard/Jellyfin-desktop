@@ -1,4 +1,4 @@
-﻿#include <winver.h>
+#include <winver.h>
 
 IDI_ICON1 ICON "@CMAKE_SOURCE_DIR@/resources/win/jellyfin.ico"
 

@@ -139,17 +139,12 @@
                 { key: 'audioPassthrough', displayName: 'Audio Passthrough', help: 'Comma-separated list of codecs to pass through to the audio device (e.g. ac3,eac3,dts-hd,truehd). Leave empty to disable.', inputType: 'textarea' },
                 { key: 'audioExclusive', displayName: 'Exclusive Audio Output', help: 'Take exclusive control of the audio device during playback. May reduce latency but prevents other apps from playing audio.' },
                 { key: 'audioChannels', displayName: 'Audio Channel Layout', help: 'Force a specific channel layout. Leave empty for auto-detection.', options: [
-                    { name: 'Auto', value: '' },
-                    { name: 'Stereo', value: 'stereo' },
-                    { name: '5.1', value: '5.1' },
-                    { name: '7.1', value: '7.1' }
-                ] },
-                { key: 'audioLanguage', displayName: 'Preferred Audio Languages', help: 'Comma-separated list of audio language codes (e.g. ja,en,fr).', inputType: 'text', maxLength: 128 },
                     { value: '', title: 'Auto' },
                     { value: 'stereo', title: 'Stereo' },
                     { value: '5.1', title: '5.1 Surround' },
                     { value: '7.1', title: '7.1 Surround' }
-                ]}
+                ] },
+                { key: 'audioLanguage', displayName: 'Preferred Audio Languages', help: 'Comma-separated list of audio language codes (e.g. ja,en,fr).', inputType: 'text', maxLength: 128 }
             ],
             transcode: [
                 { key: 'forceTranscoding', displayName: 'Force Transcoding', help: 'Always request a transcoded stream from the server, even when direct play would work.' }
@@ -533,7 +528,7 @@
         container.id = 'jellium-discovery-container';
         container.style.marginTop = '40px';
         container.style.width = '100%';
-        container.innerHTML = '<h3 style="color:#ddd; margin-bottom:15px; font-weight:normal; font-size:1.1em; text-align:center;">Serveurs d\u00E9tect\u00E9s</h3><div id="jellium-discovery-list" style="display:flex;flex-direction:column;gap:15px;align-items:center;"></div>';
+        container.innerHTML = '<h3 style="color:#ddd; margin-bottom:15px; font-weight:normal; font-size:1.1em; text-align:center;">Discovered Servers</h3><div id="jellium-discovery-list" style="display:flex;flex-direction:column;gap:15px;align-items:center;"></div>';
         
         // Always append inside the anchor.
         anchor.appendChild(container);
@@ -659,11 +654,11 @@
         box.style.border = '1px solid rgba(255,255,255,0.1)';
 
         const title = document.createElement('h2');
-        title.innerText = 'Mise \u00E0 jour disponible';
+        title.innerText = 'Update available';
         title.style.margin = '0 0 1rem 0';
         
         const desc = document.createElement('p');
-        desc.innerText = `La version ${version} est maintenant disponible !\nVoulez-vous la t\u00E9l\u00E9charger ?`;
+        desc.innerText = `Version ${version} is now available!\nWould you like to download it?`;
         desc.style.margin = '0 0 2rem 0';
         desc.style.lineHeight = '1.5';
 
@@ -673,7 +668,7 @@
         btnRow.style.justifyContent = 'center';
 
         const btnYes = document.createElement('button');
-        btnYes.innerText = 'T\u00E9l\u00E9charger';
+        btnYes.innerText = 'Download';
         btnYes.style.padding = '10px 20px';
         btnYes.style.background = '#00a4dc';
         btnYes.style.color = 'white';
@@ -689,7 +684,7 @@
         };
 
         const btnNo = document.createElement('button');
-        btnNo.innerText = 'Plus tard';
+        btnNo.innerText = 'Later';
         btnNo.style.padding = '10px 20px';
         btnNo.style.background = 'rgba(255,255,255,0.1)';
         btnNo.style.color = 'white';
