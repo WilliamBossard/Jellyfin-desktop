@@ -75,16 +75,16 @@ jobs:
           call "%VSINSTALL%\VC\Auxiliary\Build\vcvarsall.bat" %MATRIX_ARCH% || exit /b 1
           set "PATH=%PATH%;%MSYS_BIN%"
           cargo xtask package --external-mpv "%CD%\third_party\mpv-install" --prefix build/install --dist dist
-          powershell -ExecutionPolicy Bypass -File build_installer.ps1
+          powershell -ExecutionPolicy Bypass -File build_installer.ps1 -Arch %MATRIX_ARCH%
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: windows-${{ matrix.arch }}-installer
-          path: build/Jellyfin-Desktop-Setup.exe
+          path: build/Jellyfin-Desktop-Setup-${{ matrix.arch }}.exe
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: build/Jellyfin-Desktop-Setup.exe
+          files: build/Jellyfin-Desktop-Setup-${{ matrix.arch }}.exe

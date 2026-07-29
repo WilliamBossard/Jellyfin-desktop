@@ -1,4 +1,4 @@
-﻿use std::fs::File;
+use std::fs::File;
 use std::process::Command;
 use std::sync::OnceLock;
 use serde::Deserialize;
@@ -63,8 +63,15 @@ pub fn check_and_update(repo_name: &str) {
             return;
         }
 
-        // Find the Windows .exe installer asset
-        let exe_asset = release.assets.iter().find(|a| a.name.ends_with(".exe"));
+        #[cfg(target_arch = "x86_64")]
+        let arch_suffix = "-x64.exe";
+        #[cfg(target_arch = "aarch64")]
+        let arch_suffix = "-arm64.exe";
+        #[cfg(not(any(target_arch = "x86_64", target_arch = "aarch64")))]
+        let arch_suffix = ".exe";
+
+        // Find the Windows installer asset matching the architecture
+        let exe_asset = release.assets.iter().find(|a| a.name.ends_with(arch_suffix));
         let asset = match exe_asset {
             Some(a) => a,
             None => {

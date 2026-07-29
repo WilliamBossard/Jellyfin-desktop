@@ -1,3 +1,5 @@
+param([string]$Arch = "x64")
+
 $ISCC_Paths = @(
     "C:\Program Files\Inno Setup 7\ISCC.exe",
     "C:\Program Files (x86)\Inno Setup 7\ISCC.exe",
@@ -19,7 +21,7 @@ if (-not $ISCC) {
 }
 
 Write-Host "Using Inno Setup Compiler: $ISCC"
-& $ISCC "installer.iss"
+& $ISCC "/DARCH=$Arch" "installer.iss"
 #
 if ($LASTEXITCODE -eq 0) {
     Write-Host "Installer created successfully in the 'build' directory!" -ForegroundColor Green

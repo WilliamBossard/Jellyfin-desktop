@@ -1,14 +1,15 @@
 [Setup]
 AppName=Jellyfin Desktop
-AppVersion=1.0.1
+AppVersion=1.0.2
 DefaultDirName={autopf}\Jellyfin Desktop
 DefaultGroupName=Jellyfin Desktop
 UninstallDisplayIcon={app}\jellyfin-desktop.exe
 Compression=lzma2
 SolidCompression=yes
 OutputDir=build
-OutputBaseFilename=Jellyfin-Desktop-Setup
-ArchitecturesInstallIn64BitMode=x64
+OutputBaseFilename=Jellyfin-Desktop-Setup-{#ARCH}
+ArchitecturesAllowed={#ARCH}
+ArchitecturesInstallIn64BitMode={#ARCH}
 
 [Tasks]
 Name: "desktopicon"; Description: "Créer un raccourci sur le bureau"; GroupDescription: "Raccourcis additionnels :"
@@ -22,5 +23,6 @@ Name: "{autodesktop}\Jellyfin Desktop"; Filename: "{app}\jellyfin-desktop.exe"; 
 
 [Run]
 Filename: "{app}\jellyfin-desktop.exe"; Description: "Lancer Jellyfin Desktop"; Flags: nowait postinstall skipifsilent
+
 
 
