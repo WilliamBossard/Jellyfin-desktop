@@ -251,6 +251,11 @@ fn init_mpv_handle(opts: MpvInitOptions<'_>) -> *mut jfn_mpv::sys::mpv_handle {
         } else {
             channels_c.as_ptr()
         },
+        audio_language: if opts.audio_language.is_empty() {
+            ptr::null()
+        } else {
+            language_c.as_ptr()
+        },
         geometry: geometry_c.as_ref().map_or(ptr::null(), |c| c.as_ptr()),
         force_window_position: opts.boot_force_position,
         window_maximized_at_boot: opts.boot_window_max,
@@ -613,7 +618,6 @@ pub fn jfn_app_main() -> c_int {
         audio_exclusive: opts.audio_exclusive,
         audio_channels: &opts.audio_channels,
         audio_language: &opts.audio_language,
-        audio_language: saved_lang,
         mpv_log_level,
     });
     if raw.is_null() {
