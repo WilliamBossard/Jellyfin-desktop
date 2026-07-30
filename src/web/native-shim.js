@@ -32,6 +32,7 @@
 (function() {
     console.debug('[Media] Installing native shim...');
 
+    const _savedSettings = JSON.parse('__SETTINGS_JSON__');
     window._isFullscreen = _savedSettings.initialFullscreen || false;
     window._userFullscreen = _savedSettings.initialFullscreen || false;
 
@@ -101,8 +102,101 @@
         return signal;
     }
 
-    const _savedSettings = JSON.parse('__SETTINGS_JSON__');
-    document.documentElement.style.zoom = _savedSettings.uiZoom || '1.0';
+    
+    const _i18n = {
+        fr: {
+            playbackSection: 'Lecture',
+            audioSection: 'Audio',
+            transcodeSection: 'Transcodage',
+            advancedSection: 'Avancé',
+            hwdecName: 'Décodage matériel',
+            hwdecHelp: 'Mode de décodage vidéo matériel. Utilisez "auto" pour une détection automatique ou "no" pour désactiver.',
+            audioPassthroughName: 'Passthrough Audio',
+            audioPassthroughHelp: 'Liste séparée par des virgules de codecs à transmettre au périphérique audio (ex: ac3,eac3,dts-hd,truehd). Laissez vide pour désactiver.',
+            audioExclusiveName: 'Sortie Audio Exclusive',
+            audioExclusiveHelp: 'Prendre le contrôle exclusif du périphérique audio. Peut réduire la latence mais empêche les autres applications d\'émettre du son.',
+            audioChannelsName: 'Disposition des canaux audio',
+            audioChannelsHelp: 'Forcer une disposition spécifique. Laissez vide pour une détection automatique.',
+            auto: 'Auto',
+            stereo: 'Stéréo',
+            surround51: '5.1 Surround',
+            surround71: '7.1 Surround',
+            audioLanguageName: 'Langues audio préférées',
+            audioLanguageHelp: 'Liste séparée par des virgules de codes de langues (ex: ja,en,fr).',
+            forceTranscodeName: 'Forcer le transcodage',
+            forceTranscodeHelp: 'Toujours demander un flux transcodé au serveur, même si la lecture directe est possible.',
+            transparentTitlebarName: 'Barre de titre transparente',
+            transparentTitlebarHelp: 'Superposer les boutons de fenêtre sur le contenu au lieu d\'une barre séparée. Nécessite un redémarrage.',
+            windowDecorationsName: 'Décorations de fenêtre',
+            windowDecorationsHelp: 'Apparence de la barre de titre. Nécessite un redémarrage.',
+            hideScrollbarName: 'Masquer la barre de défilement',
+            hideScrollbarHelp: 'Masque les barres de défilement de l\'application. Le défilement avec la molette ou le clavier fonctionne toujours. Nécessite un redémarrage.',
+            deviceNameName: 'Nom de l\'appareil',
+            deviceNameHelp: 'Identifie cet appareil auprès du serveur. Laissez vide pour utiliser le nom d\'hôte du système.',
+            uiZoomName: 'Zoom de l\'interface',
+            uiZoomHelp: 'Mise à l\'échelle de l\'interface pour une utilisation HTPC ou TV.',
+            systemServer: 'Système (côté serveur)',
+            systemThemed: 'Système, avec thème (KDE)',
+            clientSide: 'Côté client (Bordure personnalisée)'
+        },
+        en: {
+            playbackSection: 'Playback',
+            audioSection: 'Audio',
+            transcodeSection: 'Transcode',
+            advancedSection: 'Advanced',
+            hwdecName: 'Hardware Decoding',
+            hwdecHelp: 'Hardware video decoding mode. Use "auto" for automatic detection or "no" to disable.',
+            audioPassthroughName: 'Audio Passthrough',
+            audioPassthroughHelp: 'Comma-separated list of codecs to pass through to the audio device (e.g. ac3,eac3,dts-hd,truehd). Leave empty to disable.',
+            audioExclusiveName: 'Exclusive Audio Output',
+            audioExclusiveHelp: 'Take exclusive control of the audio device during playback. May reduce latency but prevents other apps from playing audio.',
+            audioChannelsName: 'Audio Channel Layout',
+            audioChannelsHelp: 'Force a specific channel layout. Leave empty for auto-detection.',
+            auto: 'Auto',
+            stereo: 'Stereo',
+            surround51: '5.1 Surround',
+            surround71: '7.1 Surround',
+            audioLanguageName: 'Preferred Audio Languages',
+            audioLanguageHelp: 'Comma-separated list of audio language codes (e.g. ja,en,fr).',
+            forceTranscodeName: 'Force Transcoding',
+            forceTranscodeHelp: 'Always request a transcoded stream from the server, even when direct play would work.',
+            transparentTitlebarName: 'Transparent Titlebar',
+            transparentTitlebarHelp: 'Overlay traffic light buttons on the window content instead of a separate titlebar. Requires restart.',
+            windowDecorationsName: 'Window Decorations',
+            windowDecorationsHelp: 'How the window titlebar is drawn. Changing requires restart.',
+            hideScrollbarName: 'Hide Scrollbar',
+            hideScrollbarHelp: 'Hide scrollbars throughout the app. Scrolling with the wheel, trackpad, and keyboard still works. Requires restart.',
+            deviceNameName: 'Device Name',
+            deviceNameHelp: 'Identifies this machine to the server. Leave blank to use the system hostname.',
+            uiZoomName: 'Interface Zoom',
+            uiZoomHelp: 'Scale the UI for HTPC or TV mode usage.',
+            systemServer: 'System (server-side)',
+            systemThemed: 'System, themed (KDE)',
+            clientSide: 'Client-side (Custom Border)'
+        }
+    };
+    
+    function t(key) {
+        let lang = 'en';
+        try {
+            if (window.ApiClient && typeof window.ApiClient.language === 'function') {
+                lang = window.ApiClient.language();
+            } else if (window.ApiClient && typeof window.ApiClient.language === 'string') {
+                lang = window.ApiClient.language;
+            } else {
+                lang = document.documentElement.lang || window.localStorage.getItem('displaylanguage') || window.localStorage.getItem('displayLanguage') || window.localStorage.getItem('language') || navigator.language || 'en';
+            }
+        } catch (e) {
+            lang = navigator.language || 'en';
+        }
+        lang = lang.toLowerCase();
+        
+        if (lang.startsWith('fr')) return _i18n.fr[key] || _i18n.en[key];
+        return _i18n.en[key] || key;
+    }
+
+    const applyZoom = () => { if (document.documentElement) document.documentElement.style.zoom = _savedSettings.uiZoom || '1.0'; };
+    if (document.documentElement) applyZoom(); else document.addEventListener('DOMContentLoaded', applyZoom);
     
     if (!localStorage.getItem('displaylanguage') || localStorage.getItem('displaylanguage') === 'auto') {
         localStorage.setItem('displaylanguage', _savedSettings.sysLocale || 'auto');
@@ -115,10 +209,10 @@
         userAgent: navigator.userAgent,
         scriptPath: '',
         sections: [
-            { key: 'playback', order: 0 },
-            { key: 'audio', order: 1 },
-            { key: 'transcode', order: 2 },
-            { key: 'advanced', order: 3 }
+            { key: 'playback', get name() { return t('playbackSection'); }, order: 0 },
+            { key: 'audio', get name() { return t('audioSection'); }, order: 1 },
+            { key: 'transcode', get name() { return t('transcodeSection'); }, order: 2 },
+            { key: 'advanced', get name() { return t('advancedSection'); }, order: 3 }
         ],
         settings: {
             main: { enableMPV: true, fullscreen: false },
@@ -142,24 +236,24 @@
         },
         settingsDescriptions: {
             playback: [
-                { key: 'hwdec', displayName: 'Hardware Decoding', help: 'Hardware video decoding mode. Use "auto" for automatic detection or "no" to disable.', options: _savedSettings.hwdecOptions },
-                { key: 'audioPassthrough', displayName: 'Audio Passthrough', help: 'Comma-separated list of codecs to pass through to the audio device (e.g. ac3,eac3,dts-hd,truehd). Leave empty to disable.', inputType: 'textarea' },
-                { key: 'audioExclusive', displayName: 'Exclusive Audio Output', help: 'Take exclusive control of the audio device during playback. May reduce latency but prevents other apps from playing audio.' },
-                { key: 'audioChannels', displayName: 'Audio Channel Layout', help: 'Force a specific channel layout. Leave empty for auto-detection.', options: [
-                    { value: '', title: 'Auto' },
-                    { value: 'stereo', title: 'Stereo' },
-                    { value: '5.1', title: '5.1 Surround' },
-                    { value: '7.1', title: '7.1 Surround' }
+                { key: 'hwdec', get displayName() { return t('hwdecName'); }, get help() { return t('hwdecHelp'); }, options: _savedSettings.hwdecOptions },
+                { key: 'audioPassthrough', get displayName() { return t('audioPassthroughName'); }, get help() { return t('audioPassthroughHelp'); }, inputType: 'textarea' },
+                { key: 'audioExclusive', get displayName() { return t('audioExclusiveName'); }, get help() { return t('audioExclusiveHelp'); } },
+                { key: 'audioChannels', get displayName() { return t('audioChannelsName'); }, get help() { return t('audioChannelsHelp'); }, options: [
+                    { value: '', get title() { return t('auto'); } },
+                    { value: 'stereo', get title() { return t('stereo'); } },
+                    { value: '5.1', get title() { return t('surround51'); } },
+                    { value: '7.1', get title() { return t('surround71'); } }
                 ] },
-                { key: 'audioLanguage', displayName: 'Preferred Audio Languages', help: 'Comma-separated list of audio language codes (e.g. ja,en,fr).', inputType: 'text', maxLength: 128 }
+                { key: 'audioLanguage', get displayName() { return t('audioLanguageName'); }, get help() { return t('audioLanguageHelp'); }, inputType: 'text', maxLength: 128 }
             ],
             transcode: [
-                { key: 'forceTranscoding', displayName: 'Force Transcoding', help: 'Always request a transcoded stream from the server, even when direct play would work.' }
+                { key: 'forceTranscoding', get displayName() { return t('forceTranscodeName'); }, get help() { return t('forceTranscodeHelp'); } }
             ],
             advanced: [
-                { key: 'hideScrollbar', displayName: 'Hide Scrollbar', help: 'Hide scrollbars throughout the app. Scrolling with the wheel, trackpad, and keyboard still works. Requires restart.' },
-                { key: 'deviceName', displayName: 'Device Name', help: 'Identifies this machine to the server. Leave blank to use the system hostname.', inputType: 'text', maxLength: 64, placeholder: _savedSettings.deviceNameDefault },
-                { key: 'uiZoom', displayName: 'Interface Zoom', help: 'Scale the UI for HTPC or TV mode usage.', options: [
+                { key: 'hideScrollbar', get displayName() { return t('hideScrollbarName'); }, get help() { return t('hideScrollbarHelp'); } },
+                { key: 'deviceName', get displayName() { return t('deviceNameName'); }, get help() { return t('deviceNameHelp'); }, inputType: 'text', maxLength: 64, placeholder: _savedSettings.deviceNameDefault },
+                { key: 'uiZoom', get displayName() { return t('uiZoomName'); }, get help() { return t('uiZoomHelp'); }, options: [
                     { value: '0.5', title: '50%' },
                     { value: '0.75', title: '75%' },
                     { value: '1.0', title: '100% (Default)' },
@@ -183,24 +277,24 @@
     if (navigator.platform.startsWith('Mac')) {
         jmpInfo.settingsDescriptions.advanced.unshift({
             key: 'transparentTitlebar',
-            displayName: 'Transparent Titlebar',
-            help: 'Overlay traffic light buttons on the window content instead of a separate titlebar. Requires restart.'
+            get displayName() { return t('transparentTitlebarName'); },
+            get help() { return t('transparentTitlebarHelp'); }
         });
     }
 
     const decorationValues = __WINDOW_DECORATION_OPTIONS__;
     if (decorationValues.length > 1) {
         const decorationTitles = {
-            csd: 'In-app (client-side)',
-            server: 'System (server-side)',
-            serverThemed: 'System, themed (KDE)'
+            get csd() { return t('clientSide'); },
+            get server() { return t('systemServer'); },
+            get serverThemed() { return t('systemThemed'); }
         };
         jmpInfo.settingsDescriptions.advanced.unshift({
             key: 'windowDecorations',
-            displayName: 'Window Decorations',
-            help: 'How the window titlebar is drawn. Changing requires restart.',
+            get displayName() { return t('windowDecorationsName'); },
+            get help() { return t('windowDecorationsHelp'); },
             options: [
-                { value: null, title: 'Auto' },
+                { value: null, get title() { return t('auto'); } },
                 ...decorationValues.map((value) => ({ value, title: decorationTitles[value] || value }))
             ]
         });
@@ -440,7 +534,7 @@
         init() {
             return Promise.resolve({
                 deviceName: jmpInfo.deviceName,
-                appName: 'Jellium Desktop',
+                appName: 'Jellyfin Desktop',
                 appVersion: jmpInfo.version
             });
         },
@@ -452,13 +546,66 @@
                 'fileinput', 'filedownload', 'displaylanguage', 'htmlaudioautoplay',
                 'htmlvideoautoplay', 'externallinks', 'multiserver',
                 'fullscreenchange', 'remotevideo', 'displaymode',
-                'exitmenu', 'clientsettings', 'servermanagement'
+                'exitmenu', 'clientsettings', 'servermanagement', 'displaymessage'
             ];
             return features.includes(command.toLowerCase());
         },
         getDeviceProfile,
         getSyncProfile: getDeviceProfile,
-        appName() { return 'Jellium Desktop'; },
+        displayMessage(msg) {
+            let title = '';
+            let text = '';
+            if (typeof msg === 'string') {
+                text = msg;
+            } else if (msg) {
+                title = msg.title || '';
+                text = msg.text || '';
+            }
+            
+            const toast = document.createElement('div');
+            toast.style.position = 'fixed';
+            toast.style.bottom = '20px';
+            toast.style.left = '50%';
+            toast.style.transform = 'translateX(-50%)';
+            toast.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+            toast.style.color = '#fff';
+            toast.style.padding = '12px 24px';
+            toast.style.borderRadius = '8px';
+            toast.style.zIndex = '999999';
+            toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
+            toast.style.fontFamily = 'sans-serif';
+            toast.style.textAlign = 'center';
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s';
+            toast.style.pointerEvents = 'none';
+
+            if (title) {
+                const h = document.createElement('strong');
+                h.style.display = 'block';
+                h.style.marginBottom = '4px';
+                h.innerText = title;
+                toast.appendChild(h);
+            }
+            if (text) {
+                const p = document.createElement('span');
+                p.innerText = text;
+                toast.appendChild(p);
+            }
+            
+            document.body.appendChild(toast);
+            
+            // Fade in
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+            });
+            
+            // Fade out and remove after 3s
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        },
+        appName() { return 'Jellyfin Desktop'; },
         appVersion() { return jmpInfo.version; },
         deviceName() { return jmpInfo.deviceName; },
         exit() { window.api.system.exit(); }
@@ -648,8 +795,19 @@
         injectDiscoveryList();
     })();
 
+    const checkUpdateInterval = setInterval(() => {
+        if (window._updateDialogShown) {
+            clearInterval(checkUpdateInterval);
+            return;
+        }
+        if (window.jmpNative && window.jmpNative.getUpdateInfo) {
+            window.jmpNative.getUpdateInfo();
+        }
+    }, 15000);
     window._nativeUpdateInfoResult = function(version, downloadUrl, assetName) {
-        if (document.getElementById('jfn-update-dialog')) return;
+        if (window._updateDialogShown) return;
+        window._updateDialogShown = true;
+        clearInterval(checkUpdateInterval);
 
         const dialog = document.createElement('div');
         dialog.id = 'jfn-update-dialog';
@@ -699,10 +857,11 @@
         btnYes.style.cursor = 'pointer';
         btnYes.style.fontWeight = 'bold';
         btnYes.onclick = () => {
-            if (window.api && window.api.system) {
-                window.api.system.openExternalUrl(downloadUrl);
+            if (window.jmpNative && window.jmpNative.installUpdate) {
+                btnYes.innerText = 'Downloading...';
+                btnYes.disabled = true;
+                window.jmpNative.installUpdate(downloadUrl, assetName);
             }
-            dialog.remove();
         };
 
         const btnNo = document.createElement('button');

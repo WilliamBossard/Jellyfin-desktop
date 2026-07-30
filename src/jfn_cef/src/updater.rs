@@ -101,8 +101,15 @@ pub fn perform_update(url: &str, asset_name: &str) {
             let mut reader = dl_res.into_body().into_reader();
             if let Ok(mut file) = File::create(&file_path) {
                 if std::io::copy(&mut reader, &mut file).is_ok() {
+                    // Drop the file explicitly so that explorer.exe can access it without a sharing violation
+                    drop(file);
+                    
                     tracing::info!("Launching installer: {:?}", file_path);
-                    Command::new(&file_path).arg("/SILENT").spawn().ok();
+                    Command::new("explorer.exe")
+                        .arg(&file_path)
+                        .spawn()
+                        .ok();
+                    std::thread::sleep(std::time::Duration::from_millis(1500));
                     std::process::exit(0);
                 }
             }

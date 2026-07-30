@@ -1,6 +1,6 @@
-[Setup]
+ï»¿[Setup]
 AppName=Jellyfin Desktop
-AppVersion=1.0.2
+AppVersion=1.0.0
 DefaultDirName={autopf}\Jellyfin Desktop
 DefaultGroupName=Jellyfin Desktop
 UninstallDisplayIcon={app}\jellyfin-desktop.exe
@@ -8,11 +8,11 @@ Compression=lzma2
 SolidCompression=yes
 OutputDir=build
 OutputBaseFilename=Jellyfin-Desktop-Setup-{#ARCH}
-ArchitecturesAllowed={#ARCH}
-ArchitecturesInstallIn64BitMode={#ARCH}
+ArchitecturesAllowed={#if ARCH == 'x64'}x64compatible{#else}{#ARCH}{#endif}
+ArchitecturesInstallIn64BitMode={#if ARCH == 'x64'}x64compatible{#else}{#ARCH}{#endif}
 
 [Tasks]
-Name: "desktopicon"; Description: "Créer un raccourci sur le bureau"; GroupDescription: "Raccourcis additionnels :"
+Name: "desktopicon"; Description: "Crï¿½er un raccourci sur le bureau"; GroupDescription: "Raccourcis additionnels :"
 
 [Files]
 Source: "build\install\*"; Excludes: "*.pdb,*.log,mpv-build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs

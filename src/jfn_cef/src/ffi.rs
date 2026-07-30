@@ -129,7 +129,7 @@ pub fn jfn_cef_initialize() -> bool {
         locale: CefString::from(sys_locale::get_locale().unwrap_or_else(|| "en-US".to_string()).as_str()),
         accept_language_list: CefString::from(format!("{},{},en-US,en", sys_locale::get_locale().unwrap_or_else(|| "en-US".to_string()), sys_locale::get_locale().unwrap_or_else(|| "en".to_string()).split("-").next().unwrap_or("en")).as_str()),
         user_agent: CefString::from(concat!(
-            "Mozilla/5.0 jellium-desktop/",
+            "Mozilla/5.0 JellyfinDesktop/",
             env!("JFN_APP_VERSION")
         )),
         root_cache_path: CefString::from(jfn_paths::cache_dir().to_string_lossy().as_ref()),

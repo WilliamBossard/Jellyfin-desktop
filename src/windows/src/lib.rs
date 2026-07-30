@@ -186,6 +186,8 @@ const CF_UNICODETEXT: u32 = 13;
 const CP_UTF8: u32 = 65001;
 const SW_SHOWNORMAL: c_int = 1;
 
+#[link(name = "user32")]
+#[link(name = "shell32")]
 unsafe extern "C" {
     fn OpenClipboard(hwnd: *mut c_void) -> i32;
     fn CloseClipboard() -> i32;
