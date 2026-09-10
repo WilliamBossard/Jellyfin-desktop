@@ -887,3 +887,23 @@
 
     console.debug('[Media] Native shim installed');
 })();
+
+// --- Auto-loader pour Jellyfin Enhanced ---
+(function() {
+    function loadJellyfinEnhanced() {
+        if (window.JellyfinEnhanced) return;
+        var existing = document.querySelector('script[src*="JellyfinEnhanced"]');
+        if (!existing || !window.JellyfinEnhanced) {
+            var s = document.createElement('script');
+            s.src = '../JellyfinEnhanced/script';
+            s.defer = true;
+            document.head.appendChild(s);
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadJellyfinEnhanced);
+    } else {
+        loadJellyfinEnhanced();
+    }
+})();

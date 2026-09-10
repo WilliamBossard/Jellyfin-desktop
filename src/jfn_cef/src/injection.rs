@@ -67,6 +67,8 @@ pub(crate) enum NativeFunction {
     CsdReady,
     MenuItemSelected,
     MenuDismissed,
+    StartDownload,
+    OpenDownloadsView,
 }
 
 impl NativeFunction {
@@ -120,6 +122,8 @@ impl NativeFunction {
             "csdReady" => Self::CsdReady,
             "menuItemSelected" => Self::MenuItemSelected,
             "menuDismissed" => Self::MenuDismissed,
+            "startDownload" => Self::StartDownload,
+            "openDownloadsView" => Self::OpenDownloadsView,
             _ => return None,
         })
     }
@@ -173,7 +177,9 @@ impl NativeFunction {
             Self::WindowStartResize => "windowStartResize",
             Self::CsdReady => "csdReady",
             Self::MenuItemSelected => "menuItemSelected",
-            Self::MenuDismissed => "menuDismissed",
+                        Self::MenuDismissed => "menuDismissed",
+            Self::StartDownload => "startDownload",
+            Self::OpenDownloadsView => "openDownloadsView",
         }
     }
 }
@@ -268,6 +274,8 @@ const WEB_FUNCTIONS: &[NativeFunction] = &[
     NativeFunction::ThemeColor,
     NativeFunction::SetOsdVisible,
     NativeFunction::ToggleFullscreen,
+    NativeFunction::StartDownload,
+    NativeFunction::OpenDownloadsView,
 ];
 
 const WEB_SCRIPTS: &[InjectedScript] = &[
