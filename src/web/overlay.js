@@ -54,14 +54,12 @@ async function tryConnect(server, spinnerStartTime = Date.now()) {
         // main browser has ≥1s to render after navigate. For fast probes this
         // saves up to ~900ms compared to running the two waits sequentially.
         // Skip when main is already loading (startup pre-load or prior nav).
-        if (!mainLoaded) {
-            if (window.jmpNative && window.jmpNative.navigateMain) {
-                window.jmpNative.navigateMain(resolvedUrl);
-                mainLoaded = true;
-            } else {
-                console.error("navigateMain IPC not available");
-                return false;
-            }
+        if (window.jmpNative && window.jmpNative.navigateMain) {
+            window.jmpNative.navigateMain(resolvedUrl);
+            mainLoaded = true;
+        } else {
+            console.error("navigateMain IPC not available");
+            return false;
         }
 
         const elapsed = Date.now() - spinnerStartTime;
@@ -119,18 +117,41 @@ const showConnectionFailedDialog = () => {
     message.innerText = messageUnableToConnectToServerText;
     message.className = 'dialog-message';
 
+    const btnContainer = document.createElement('div');
+    btnContainer.style.cssText = 'display:flex;flex-direction:column;gap:12px;margin-top:2em;width:100%;max-width:320px;align-items:center;';
+
+    const offlineBtn = document.createElement('button');
+    offlineBtn.innerText = 'Voir les fichiers téléchargés';
+    offlineBtn.type = 'button';
+    offlineBtn.style.cssText = 'background:#00a4dc;color:#fff;border:none;border-radius:4px;padding:12px 20px;font-weight:600;font-size:0.95em;cursor:pointer;width:100%;text-transform:none;letter-spacing:normal;box-shadow:0 2px 8px rgba(0,164,220,0.4);transition:background .15s ease;';
+    offlineBtn.onmouseenter = () => { offlineBtn.style.background = '#0cb0e8'; };
+    offlineBtn.onmouseleave = () => { offlineBtn.style.background = '#00a4dc'; };
+    offlineBtn.addEventListener('click', () => {
+        dialog.remove();
+        if (window.jmpNative && window.jmpNative.openOfflineMode) {
+            window.jmpNative.openOfflineMode();
+        }
+    });
+
     const button = document.createElement('button');
     button.innerText = buttonGotItText;
     button.type = 'button';
     button.className = 'dialog-button';
+    button.style.cssText = 'background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.2);border-radius:4px;padding:10px 20px;font-weight:500;font-size:0.9em;cursor:pointer;width:100%;text-transform:none;letter-spacing:normal;';
     button.addEventListener('click', (e) => {
         dialog.remove();
     });
 
     dialog.appendChild(header);
     dialog.appendChild(message);
-    dialog.appendChild(button);
+    btnContainer.appendChild(offlineBtn);
+    btnContainer.appendChild(button);
+    dialog.appendChild(btnContainer);
     document.body.appendChild(dialog);
+
+    if (window.jmpNative && window.jmpNative.findServers) {
+        window.jmpNative.findServers(2000);
+    }
 };
 
 const startConnecting = async () => {
@@ -152,6 +173,11 @@ const startConnecting = async () => {
     button.style.visibility = 'hidden';
     document.addEventListener('keydown', cancelOnEscape);
 
+    const offlineLink = document.getElementById('offline-link-container');
+    if (offlineLink) offlineLink.style.display = 'none';
+    const discServers = document.getElementById('discovered-servers');
+    if (discServers) discServers.style.display = 'none';
+
     // C++ handles retries, just wait for result
     const connected = await tryConnect(server, spinnerStart);
 
@@ -164,6 +190,11 @@ const startConnecting = async () => {
         address.disabled = false;
         spinner.style.display = 'none';
         button.style.visibility = 'visible';
+        if (offlineLink) offlineLink.style.display = 'block';
+        if (discServers && discServers.querySelector('.server-card')) {
+            discServers.style.display = 'flex';
+            discServers.style.visibility = 'visible';
+        }
         document.removeEventListener('keydown', cancelOnEscape);
         updateButtonState();
         showConnectionFailedDialog();
@@ -177,6 +208,29 @@ const cancelConnection = () => {
     // Native resets main on cancelServerConnectivity.
     mainLoaded = false;
     isConnecting = false;
+
+    const address = document.getElementById('address');
+    const title = document.getElementById('title');
+    const spinner = document.getElementById('spinner');
+    const button = document.getElementById('connect-button');
+    if (title) {
+        title.textContent = title.getAttribute('data-original-text');
+        title.style.visibility = 'visible';
+    }
+    if (address) {
+        address.classList.remove('connecting');
+        address.style.visibility = 'visible';
+        address.disabled = false;
+    }
+    if (spinner) spinner.style.display = 'none';
+    if (button) button.style.visibility = 'visible';
+    const offlineLink = document.getElementById('offline-link-container');
+    if (offlineLink) offlineLink.style.display = 'block';
+    const discServers = document.getElementById('discovered-servers');
+    if (discServers && discServers.querySelector('.server-card')) {
+        discServers.style.display = 'flex';
+        discServers.style.visibility = 'visible';
+    }
 
     // Cancel C++ connectivity check and abort JS promise.
     // jmpCheckServerConnectivity.abort() calls jmpNative.cancelServerConnectivity
@@ -228,9 +282,7 @@ document.addEventListener('keydown', (e) => {
     if (savedServer) {
         console.debug('Auto-connect: checking saved server', savedServer);
 
-        // main.cpp pre-loads the saved URL into the main browser in parallel
-        // with overlay startup, so don't issue a redundant navigateMain.
-        mainLoaded = true;
+        mainLoaded = false;
 
         const address = document.getElementById('address');
 
@@ -254,19 +306,22 @@ document.addEventListener('keydown', (e) => {
 // Discover servers and populate UI (always defined so it can run if needed)
 window._nativeFindServersResult = function(servers) {
     try {
+        if (typeof servers === 'string') {
+            try { servers = JSON.parse(servers); } catch (e) { servers = []; }
+        }
         if (servers && Array.isArray(servers) && servers.length > 0) {
             const container = document.getElementById('discovered-servers');
             const titleEl = document.getElementById('discovered-servers-title');
             const listEl = document.getElementById('discovered-servers-list');
             
-            titleEl.innerText = (window.overlayStrings && window.overlayStrings.DiscoveredServers) || 'Discovered Servers';
+            titleEl.innerText = (window.overlayStrings && window.overlayStrings.DiscoveredServers) || 'Serveurs détectés sur le réseau';
             listEl.innerHTML = '';
             
             let count = 0;
             servers.forEach(server => {
                 const sAddr = server.Address || server.address || '';
-                // Ne pas proposer le serveur s'il est déjà enregistré (ou en cours de connexion)
-                if (savedServerUrl && sAddr && savedServerUrl.toLowerCase() === sAddr.toLowerCase()) return;
+                // Ne masquer que si une tentative de connexion active est déjà en cours vers cette adresse précise
+                if (isConnecting && savedServerUrl && sAddr && savedServerUrl.toLowerCase() === sAddr.toLowerCase()) return;
 
                 const card = document.createElement('div');
                 card.className = 'server-card';
@@ -304,5 +359,15 @@ window._nativeFindServersResult = function(servers) {
 };
 
 if (window.jmpNative && window.jmpNative.findServers) {
-    window.jmpNative.findServers(1000);
+    window.jmpNative.findServers(1500);
+}
+
+const offlineFormBtn = document.getElementById('offline-button');
+if (offlineFormBtn) {
+    offlineFormBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (window.jmpNative && window.jmpNative.openOfflineMode) {
+            window.jmpNative.openOfflineMode();
+        }
+    });
 }

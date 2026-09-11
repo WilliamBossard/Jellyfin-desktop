@@ -1,5 +1,8 @@
 fn main() {
-    println!("Start discovery...");
-    let servers = jfn_jellyfin::discovery::discover_servers(2000);
-    println!("Found: {:?}", servers);
+    println!("Testing jfn_jellyfin::discovery::discover_servers...");
+    let servers = jfn_jellyfin::discovery::discover_servers(1500);
+    println!("Result servers count: {}", servers.len());
+    for s in &servers {
+        println!("Server found: {:?}", s);
+    }
 }

@@ -43,6 +43,7 @@ static RESOURCES: &[(&str, Embedded)] = &[
     embedded!("mpv-player-base.js", "application/javascript"),
     embedded!("mpv-video-player.js", "application/javascript"),
     embedded!("native-shim.js", "application/javascript"),
+    embedded!("offline.html", "text/html"),
     embedded!("overlay.css", "text/css"),
     embedded!("overlay.html", "text/html"),
     embedded!("overlay.js", "application/javascript"),
@@ -104,6 +105,37 @@ fn abs_path(p: &str) -> String {
     }
 }
 
+fn hex_val(c: u8) -> Option<u8> {
+    match c {
+        b'0'..=b'9' => Some(c - b'0'),
+        b'a'..=b'f' => Some(c - b'a' + 10),
+        b'A'..=b'F' => Some(c - b'A' + 10),
+        _ => None,
+    }
+}
+
+fn percent_decode(input: &str) -> String {
+    let bytes = input.as_bytes();
+    let mut out = Vec::with_capacity(bytes.len());
+    let mut i = 0;
+    while i < bytes.len() {
+        if bytes[i] == b'%' && i + 2 < bytes.len() {
+            if let (Some(h1), Some(h2)) = (hex_val(bytes[i + 1]), hex_val(bytes[i + 2])) {
+                out.push((h1 << 4) | h2);
+                i += 3;
+                continue;
+            }
+        }
+        if bytes[i] == b'+' {
+            out.push(b' ');
+        } else {
+            out.push(bytes[i]);
+        }
+        i += 1;
+    }
+    String::from_utf8_lossy(&out).into_owned()
+}
+
 // ---- SchemeHandlerFactory --------------------------------------------------
 
 #[derive(Clone)]
@@ -139,6 +171,18 @@ wrap_scheme_handler_factory! {
                 (theme_css(), "text/css")
             } else if url_path == "resources/about.js" {
                 (about_js_payload(), "application/javascript")
+            } else if url_path.starts_with("resources/downloads/artwork") || url.contains("resources/downloads/artwork") {
+                let query_str = url.split_once('?').map(|(_, q)| q).unwrap_or("");
+                let filename = query_str
+                    .split('&')
+                    .find_map(|pair| pair.strip_prefix("path="))
+                    .unwrap_or_else(|| url_path.strip_prefix("resources/downloads/artwork/").unwrap_or(""));
+                let decoded = percent_decode(filename);
+                if let Some(art) = crate::downloader::get_artwork_bytes(&decoded) {
+                    (art, "image/jpeg")
+                } else {
+                    (Vec::new(), "image/jpeg")
+                }
             } else if let Some(r) = lookup(&url_path) {
                 (r.bytes.to_vec(), r.mime)
             } else {

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jellyfin - Mode hors-ligne</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            background: #101010;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+        html.transparentDocument,
+        body.transparentDocument,
+        html.transparentDocument body {
+            background: transparent !important;
+            background-color: transparent !important;
+        }
+        body.transparentDocument #offline-placeholder {
+            display: none !important;
+        }
+        #offline-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 24px;
+        }
+        .offline-logo {
+            width: 72px;
+            height: 72px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+        h1 {
+            font-size: 1.75em;
+            font-weight: 600;
+            margin: 0 0 10px;
+            color: #fff;
+        }
+        p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 1em;
+            max-width: 440px;
+            line-height: 1.5;
+            margin: 0 0 26px;
+        }
+        .offline-actions {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn-offline-dl {
+            background: #00a4dc;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 22px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 164, 220, 0.4);
+            transition: background .15s ease, transform .1s ease;
+        }
+        .btn-offline-dl:hover {
+            background: #0cb0e8;
+            transform: scale(1.02);
+        }
+        .btn-reconnect {
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 0.95em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background .15s ease;
+        }
+        .btn-reconnect:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+    <div id="offline-placeholder">
+        <svg class="offline-logo" viewBox="0 0 100 100" fill="none">
+            <path d="M50 8C26.8 8 8 26.8 8 50s18.8 42 42 42 42-18.8 42-42S73.2 8 50 8zm-8 62L24 52l5.6-5.6 12.4 12.3 28-28L75.6 36 42 70z" fill="#00a4dc"/>
+        </svg>
+        <h1>Mode hors-ligne</h1>
+        <p>Vous êtes actuellement en mode hors-ligne. Vous pouvez accéder directement à vos films et séries téléchargés ou retenter une connexion.</p>
+        <div class="offline-actions">
+            <button class="btn-offline-dl" onclick="window.showDownloadsView && window.showDownloadsView()">Ouvrir mes téléchargements</button>
+            <button class="btn-reconnect" onclick="reconnect()">Se reconnecter au serveur</button>
+        </div>
+    </div>
+    <script>
+        function reconnect() {
+            if (window.jmpNative && window.jmpNative.reconnectServer) {
+                window.jmpNative.reconnectServer();
+            } else {
+                location.reload();
+            }
+        }
+        window.addEventListener('DOMContentLoaded', () => {
+            const checkAndOpen = () => {
+                if (typeof window.showDownloadsView === 'function') {
+                    window.showDownloadsView();
+                } else {
+                    setTimeout(checkAndOpen, 50);
+                }
+            };
+            setTimeout(checkAndOpen, 50);
+        });
+    </script>
+</body>
+</html>

@@ -207,7 +207,7 @@ impl Inner {
         })
     }
 
-    fn name_str(&self) -> String {
+    pub(crate) fn name_str(&self) -> String {
         self.name.lock().clone()
     }
 

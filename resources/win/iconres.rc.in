@@ -1,5 +1,6 @@
 #include <winver.h>
 
+1 ICON "@CMAKE_SOURCE_DIR@/resources/win/jellyfin.ico"
 IDI_ICON1 ICON "@CMAKE_SOURCE_DIR@/resources/win/jellyfin.ico"
 
 VS_VERSION_INFO VERSIONINFO

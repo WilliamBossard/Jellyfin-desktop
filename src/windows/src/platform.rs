@@ -19,12 +19,14 @@ use windows::Win32::Graphics::Gdi::{
 };
 use windows::Win32::UI::Controls::MARGINS;
 use windows::Win32::UI::HiDpi::{GetDpiForSystem, SetProcessDpiAwarenessContext, DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2};
+use windows::Win32::System::LibraryLoader::GetModuleHandleW;
 use windows::Win32::UI::WindowsAndMessaging::{
     CWPRETSTRUCT, CallNextHookEx, GWL_STYLE, GetWindowLongPtrW, GetWindowRect,
-    GetWindowThreadProcessId, HHOOK, IsIconic, IsZoomed, SIZE_MINIMIZED, SPI_GETWORKAREA,
-    SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS, SetWindowsHookExW, SystemParametersInfoW,
-    UnhookWindowsHookEx, WH_CALLWNDPROCRET, WM_CLOSE, WM_SIZE, WS_CAPTION, WS_THICKFRAME,
-    WM_DPICHANGED,
+    GetWindowThreadProcessId, HHOOK, HICON, ICON_BIG, ICON_SMALL, IMAGE_ICON, IsIconic, IsZoomed,
+    LR_DEFAULTSIZE, LR_SHARED, LoadImageW, SIZE_MINIMIZED, SPI_GETWORKAREA,
+    SYSTEM_PARAMETERS_INFO_UPDATE_FLAGS, SendMessageW, SetWindowsHookExW, SystemParametersInfoW,
+    UnhookWindowsHookEx, WH_CALLWNDPROCRET, WM_CLOSE, WM_DPICHANGED, WM_SETICON, WM_SIZE,
+    WS_CAPTION, WS_THICKFRAME,
 };
 
 use jfn_mpv::api::{
@@ -326,6 +328,46 @@ pub fn win_init(_mpv: *mut c_void) -> bool {
     }
     let hwnd_raw = wid as usize;
     STATE.lock().mpv_hwnd_raw = hwnd_raw;
+    let hwnd = hwnd_from_raw(hwnd_raw);
+
+    // Set application window icons (big and small) on mpv HWND
+    if let Ok(hinst) = unsafe { GetModuleHandleW(None) } {
+        unsafe {
+            let mut icon = LoadImageW(
+                Some(hinst.into()),
+                windows::core::PCWSTR(1 as *const u16),
+                IMAGE_ICON,
+                0,
+                0,
+                LR_DEFAULTSIZE | LR_SHARED,
+            );
+            if icon.is_err() {
+                icon = LoadImageW(
+                    Some(hinst.into()),
+                    windows::core::w!("IDI_ICON1"),
+                    IMAGE_ICON,
+                    0,
+                    0,
+                    LR_DEFAULTSIZE | LR_SHARED,
+                );
+            }
+            if let Ok(h) = icon {
+                let hicon = HICON(h.0);
+                let _ = SendMessageW(
+                    hwnd,
+                    WM_SETICON,
+                    Some(WPARAM(ICON_BIG as usize)),
+                    Some(LPARAM(hicon.0 as isize)),
+                );
+                let _ = SendMessageW(
+                    hwnd,
+                    WM_SETICON,
+                    Some(WPARAM(ICON_SMALL as usize)),
+                    Some(LPARAM(hicon.0 as isize)),
+                );
+            }
+        }
+    }
 
     // Seed cached_scale.
     win_get_scale();

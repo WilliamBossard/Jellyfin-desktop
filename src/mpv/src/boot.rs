@@ -127,6 +127,7 @@ fn apply_defaults(
     // so unspecified tracks stay disabled instead of being auto-picked
     // by language / default-flag / codec scoring.
     set("track-auto-selection", "no")?;
+    set("sub-auto", "fuzzy")?;
 
     // Input: we own all devices and route through CEF.
     set("input-default-bindings", "no")?;

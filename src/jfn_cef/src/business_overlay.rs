@@ -26,12 +26,34 @@ use crate::ipc::{BrowserMessage, list_opt_string, list_string, send_to_renderer}
 use jfn_color::theme::jfn_theme_color_on_overlay_dismissed;
 use jfn_jellyfin::{extract_base_url, is_valid_public_info, normalize_input};
 
+use std::sync::atomic::{AtomicPtr, Ordering};
+
 struct OverlayState {
     main_layer: Arc<Inner>,
     active_probe: Option<Urlrequest>,
 }
 
 static INSTANCE: Mutex<Option<OverlayState>> = Mutex::new(None);
+static SAVED_MAIN_LAYER: AtomicPtr<JfnCefLayer> = AtomicPtr::new(std::ptr::null_mut());
+static SAVED_OVERLAY_LAYER: AtomicPtr<JfnCefLayer> = AtomicPtr::new(std::ptr::null_mut());
+
+/// Show or reopen the server-selection overlay over the main layer.
+pub fn jfn_overlay_show() {
+    let overlay_ptr = SAVED_OVERLAY_LAYER.load(Ordering::SeqCst);
+    if !overlay_ptr.is_null() && INSTANCE.lock().is_some() {
+        unsafe {
+            jfn_cef_layer_set_visible(overlay_ptr, true);
+        }
+        jfn_browsers_set_active(overlay_ptr);
+        let inner = unsafe { jfn_cef_layer_inner(overlay_ptr) };
+        inner.load_url("app://resources/overlay.html");
+    } else {
+        let main_ptr = SAVED_MAIN_LAYER.load(Ordering::SeqCst);
+        if !main_ptr.is_null() {
+            jfn_overlay_init(main_ptr);
+        }
+    }
+}
 
 /// Create the overlay layer over `main_layer`, install handlers, load the
 /// overlay URL. Called once after the main browser is created.
@@ -42,6 +64,8 @@ pub fn jfn_overlay_init(main_layer: *mut JfnCefLayer) {
     if reject_double_init(&INSTANCE.lock(), "jfn_overlay_init") {
         return;
     }
+
+    SAVED_MAIN_LAYER.store(main_layer, Ordering::SeqCst);
 
     let kind = c"overlay";
     let layer = unsafe { jfn_browsers_create(kind.as_ptr()) };
@@ -60,6 +84,8 @@ pub fn jfn_overlay_init(main_layer: *mut JfnCefLayer) {
         let url = "app://resources/overlay.html";
         jfn_cef_layer_create(layer, url.as_ptr() as *const _, url.len());
     }
+
+    SAVED_OVERLAY_LAYER.store(layer, Ordering::SeqCst);
 
     let main_inner = unsafe { jfn_cef_layer_inner(main_layer) };
     *INSTANCE.lock() = Some(OverlayState {
@@ -86,6 +112,7 @@ fn install_handlers(layer: *mut JfnCefLayer, inner_for_created: Arc<Inner>) {
     l.set_before_close_callback_rust(Some(Box::new(|| {
         cancel_active_probe();
         *INSTANCE.lock() = None;
+        SAVED_OVERLAY_LAYER.store(std::ptr::null_mut(), Ordering::SeqCst);
     })));
 
     l.set_context_menu_builder_rust(Some(crate::app_menu::build_closure()));
@@ -153,6 +180,34 @@ fn handle_message(message: BrowserMessage) -> bool {
             let p = ml.layer_ptr();
             if !p.is_null() {
                 jfn_browsers_set_active(p);
+            }
+            let overlay_ptr = SAVED_OVERLAY_LAYER.load(Ordering::SeqCst);
+            if !overlay_ptr.is_null() {
+                unsafe {
+                    jfn_cef_layer_set_visible(overlay_ptr, false);
+                }
+            }
+            jfn_theme_color_on_overlay_dismissed();
+            true
+        }
+        "openOfflineMode" => {
+            jfn_logging::log(
+                jfn_logging::CATEGORY_CEF,
+                jfn_logging::LEVEL_INFO,
+                "Overlay: openOfflineMode",
+            );
+            if let Some(ml) = main_layer_arc() {
+                ml.load_url("app://resources/offline.html");
+                let p = ml.layer_ptr();
+                if !p.is_null() {
+                    jfn_browsers_set_active(p);
+                }
+            }
+            let overlay_ptr = SAVED_OVERLAY_LAYER.load(Ordering::SeqCst);
+            if !overlay_ptr.is_null() {
+                unsafe {
+                    jfn_cef_layer_set_visible(overlay_ptr, false);
+                }
             }
             jfn_theme_color_on_overlay_dismissed();
             true
