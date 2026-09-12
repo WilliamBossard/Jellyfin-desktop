@@ -321,6 +321,99 @@ fn handle_message(message: BrowserMessage) -> bool {
         return true;
     }
 
+    if message.name() == "startDownload" {
+        if let Some(args) = args {
+            let url = list_string(args, 0);
+            let filename = list_string(args, 1);
+            let metadata_json = if args.size() > 2 {
+                list_string(args, 2)
+            } else {
+                String::new()
+            };
+            let artwork_url = if args.size() > 3 {
+                list_string(args, 3)
+            } else {
+                String::new()
+            };
+            let subtitles_json = if args.size() > 4 {
+                list_string(args, 4)
+            } else {
+                String::new()
+            };
+            crate::downloader::download_file(
+                url,
+                filename,
+                metadata_json,
+                artwork_url,
+                subtitles_json,
+            );
+        }
+        return true;
+    }
+
+    if message.name() == "openDownloadsView" {
+        crate::downloader::open_downloads_dir();
+        return true;
+    }
+
+    if message.name() == "listDownloads" {
+        if let Some(frame) = message.main_frame() {
+            let json = crate::downloader::list_downloads_json();
+            let js = format!("window._nativeDownloadsResult({json:?});");
+            frame.execute_java_script(
+                Some(&cef::CefString::from(js.as_str())),
+                Some(&cef::CefString::from("native-shim.js")),
+                0,
+            );
+        }
+        return true;
+    }
+
+    if message.name() == "deleteDownload" {
+        if let Some(args) = args {
+            let filename = list_string(args, 0);
+            let deleted = crate::downloader::delete_download(filename);
+            if let Some(frame) = message.main_frame() {
+                let js = format!("window._nativeDownloadDeleted({deleted});");
+                frame.execute_java_script(
+                    Some(&cef::CefString::from(js.as_str())),
+                    Some(&cef::CefString::from("native-shim.js")),
+                    0,
+                );
+            }
+        }
+        return true;
+    }
+
+    if message.name() == "checkDownload" {
+        if let Some(args) = args {
+            let filename = list_string(args, 0);
+            let request_id = list_string(args, 1);
+            let exists = crate::downloader::download_exists(&filename);
+            if let Some(frame) = message.main_frame() {
+                let js = format!("window._nativeDownloadExists({request_id:?}, {exists});");
+                frame.execute_java_script(
+                    Some(&cef::CefString::from(js.as_str())),
+                    Some(&cef::CefString::from("native-shim.js")),
+                    0,
+                );
+            }
+        }
+        return true;
+    }
+
+    if message.name() == "reconnectServer" || message.name() == "showServerSelection" {
+        crate::business_overlay::jfn_overlay_show();
+        return true;
+    }
+
+    if message.name() == "saveServerUrl" {
+        return with_args(args, |a| {
+            jfn_config::set_server_url(&list_string(a, 0));
+            jfn_config::settings_save_async();
+        });
+    }
+
     // mpv handle not yet initialised — return false so CEF treats the message as unhandled.
     if jfn_mpv_handle_get().is_null() {
         return false;

@@ -8,6 +8,7 @@ pub mod business_about;
 mod business_common;
 pub mod business_overlay;
 pub mod business_web;
+pub mod downloader;
 pub mod client;
 mod client_impl;
 mod embedded_js;

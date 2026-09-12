@@ -65,7 +65,6 @@ wrap_app! {
                 "disable-background-networking",
                 "disable-client-side-phishing-detection",
                 "disable-default-apps",
-                "disable-extensions",
                 "disable-component-update",
                 "disable-sync",
                 "disable-translate",
@@ -74,7 +73,11 @@ wrap_app! {
                 "disable-notifications",
                 "disable-spell-checking",
                 "no-pings",
-                "bwsi", "no-proxy-server",
+                "bwsi",
+                "no-proxy-server",
+                "disable-web-security",
+                "allow-running-insecure-content",
+                "disable-site-isolation-trials",
             ] {
                 cl.append_switch(Some(&CefString::from(sw)));
             }

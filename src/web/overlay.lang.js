@@ -1,4 +1,4 @@
-﻿// Translations from jellyfin-web/src/strings/
+// Translations from jellyfin-web/src/strings/
 // Generated with:
 // jq -n '[inputs | { lang: input_filename | split(".")[0], HeaderConnectToServer: .HeaderConnectToServer, LabelServerHost: .LabelServerHost, LabelServerHostHelp: .LabelServerHostHelp, Connect: .Connect, HeaderConnectionFailure: .HeaderConnectionFailure, MessageUnableToConnectToServer: .MessageUnableToConnectToServer, ButtonGotIt: .ButtonGotIt }]' *.json
 
@@ -290,8 +290,8 @@ const languages = [
     "LabelServerHost": "Hôte",
     "LabelServerHostHelp": "192.168.1.100:8096 ou https://monserveur.com",
     "Connect": "Connexion",
-    "HeaderConnectionFailure": "Ã‰chec de connexion",
-    "MessageUnableToConnectToServer": "Impossible de se connecter au serveur sÃ©lectionnÃ©. Assurez-vous qu'il est opÃ©rationnel.",
+    "HeaderConnectionFailure": "Échec de connexion",
+    "MessageUnableToConnectToServer": "Impossible de se connecter au serveur sélectionné. Assurez-vous qu'il est opérationnel.",
     "ButtonGotIt": "J'ai compris"
   },
   {
@@ -301,8 +301,8 @@ const languages = [
     "LabelServerHost": "Nom d'hôte",
     "LabelServerHostHelp": "192.168.1.1:8096 ou https://monserveur.com",
     "Connect": "Se connecter",
-    "HeaderConnectionFailure": "Ã‰chec de connexion",
-    "MessageUnableToConnectToServer": "Nous sommes dans l'impossibilitÃ© de nous connecter au serveur sÃ©lectionnÃ©. Veuillez vÃ©rifier qu'il est opÃ©rationnel et rÃ©essayez.",
+    "HeaderConnectionFailure": "Échec de connexion",
+    "MessageUnableToConnectToServer": "Nous sommes dans l'impossibilité de nous connecter au serveur sélectionné. Veuillez vérifier qu'il est opérationnel et réessayez.",
     "ButtonGotIt": "Compris"
   },
   {
@@ -966,6 +966,7 @@ if (!languages.find(l => l.lang === language)) {
 
 const languageStrings = languages.find(l => l.lang === language);
 const fallbackStrings = languages.find(l => l.lang === fallbackLanguage);
+window.overlayStrings = languageStrings || fallbackStrings;
 
 const titleText = languageStrings.LabelServerHost || fallbackStrings.LabelServerHost || 'Server Address';
 const connectText = languageStrings.Connect || fallbackStrings.Connect;

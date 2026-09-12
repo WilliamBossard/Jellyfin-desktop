@@ -12,6 +12,7 @@ crate-type = ["rlib"]
 serde_json = { workspace = true, features = ["preserve_order"] }
 serde = { version = "1", features = ["derive"] }
 tracing = { workspace = true }
+gethostname = { workspace = true }
 
 [lints]
 workspace = true

@@ -10,6 +10,7 @@
             this.artworkAbortController = null;
             this.pendingArtworkUrl = null;
             this.attachedPlayer = null;
+            window._inputPluginInstance = this;
 
             console.debug('[Media] inputPlugin constructed with playbackManager:', !!playbackManager);
 

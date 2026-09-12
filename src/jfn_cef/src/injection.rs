@@ -67,6 +67,13 @@ pub(crate) enum NativeFunction {
     CsdReady,
     MenuItemSelected,
     MenuDismissed,
+    StartDownload,
+    OpenDownloadsView,
+    ListDownloads,
+    DeleteDownload,
+    CheckDownload,
+    OpenOfflineMode,
+    ReconnectServer,
 }
 
 impl NativeFunction {
@@ -120,6 +127,13 @@ impl NativeFunction {
             "csdReady" => Self::CsdReady,
             "menuItemSelected" => Self::MenuItemSelected,
             "menuDismissed" => Self::MenuDismissed,
+            "startDownload" => Self::StartDownload,
+            "openDownloadsView" => Self::OpenDownloadsView,
+            "listDownloads" => Self::ListDownloads,
+            "deleteDownload" => Self::DeleteDownload,
+            "checkDownload" => Self::CheckDownload,
+            "openOfflineMode" => Self::OpenOfflineMode,
+            "reconnectServer" => Self::ReconnectServer,
             _ => return None,
         })
     }
@@ -174,6 +188,13 @@ impl NativeFunction {
             Self::CsdReady => "csdReady",
             Self::MenuItemSelected => "menuItemSelected",
             Self::MenuDismissed => "menuDismissed",
+            Self::StartDownload => "startDownload",
+            Self::OpenDownloadsView => "openDownloadsView",
+            Self::ListDownloads => "listDownloads",
+            Self::DeleteDownload => "deleteDownload",
+            Self::CheckDownload => "checkDownload",
+            Self::OpenOfflineMode => "openOfflineMode",
+            Self::ReconnectServer => "reconnectServer",
         }
     }
 }
@@ -268,6 +289,12 @@ const WEB_FUNCTIONS: &[NativeFunction] = &[
     NativeFunction::ThemeColor,
     NativeFunction::SetOsdVisible,
     NativeFunction::ToggleFullscreen,
+    NativeFunction::StartDownload,
+    NativeFunction::OpenDownloadsView,
+    NativeFunction::ListDownloads,
+    NativeFunction::DeleteDownload,
+    NativeFunction::CheckDownload,
+    NativeFunction::ReconnectServer,
 ];
 
 const WEB_SCRIPTS: &[InjectedScript] = &[
@@ -286,6 +313,7 @@ const OVERLAY_FUNCTIONS: &[NativeFunction] = &[
     NativeFunction::CheckServerConnectivity,
     NativeFunction::CancelServerConnectivity,
     NativeFunction::FindServers,
+    NativeFunction::OpenOfflineMode,
 ];
 
 const ABOUT_FUNCTIONS: &[NativeFunction] =

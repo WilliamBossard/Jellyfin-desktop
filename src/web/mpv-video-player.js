@@ -42,6 +42,12 @@
             this.isFetching = false;
 
             window._mpvVideoPlayerInstance = this;
+            if (playbackManager && !window.playbackManager) {
+                window.playbackManager = playbackManager;
+            }
+            if (appRouter && !window.appRouter) {
+                window.appRouter = appRouter;
+            }
 
             this._videoDialog = undefined;
             this._currentSrc = undefined;
@@ -100,6 +106,26 @@
             this._currentTime = null;
             this._endedPending = false;
             if (options.resetSubtitleOffset !== false) this.resetSubtitleOffset();
+
+            // Si le média est déjà téléchargé localement, utiliser le fichier local pour une lecture instantanée sans buffering
+            const itemId = options.item?.Id || options.mediaSource?.Id;
+            if (itemId && window._downloadsCache) {
+                const localRecord = window._downloadsCache.find(r => {
+                    if (r.status !== 'complete' || !r.media_path) return false;
+                    try {
+                        const m = JSON.parse(r.metadata || '{}');
+                        return m.Id === itemId;
+                    } catch (_) {
+                        return false;
+                    }
+                });
+                if (localRecord && localRecord.media_path) {
+                    console.info(`[Media] [${this.logTag}] Média téléchargé détecté pour ${itemId}, lecture locale directe :`, localRecord.media_path);
+                    options.url = localRecord.media_path;
+                    options.playMethod = 'DirectPlay';
+                }
+            }
+
             if (options.fullscreen) this.loading.show();  // fills entire web content area, not the actual screen
             await this.createMediaElement(options);
             console.debug(`[Media] [${this.logTag}] createMediaElement done, calling setCurrentSrc`);
