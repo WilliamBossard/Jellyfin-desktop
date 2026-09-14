@@ -2,6 +2,14 @@ name: build-windows
 
 on:
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag de release (ex: v1.0.1). Laissez vide pour utiliser la version de Cargo.toml ou le tag git.'
+        required: false
+        default: ''
+  push:
+    tags:
+      - 'v*'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -35,6 +43,26 @@ jobs:
         uses: actions/checkout@v7
         with:
           submodules: recursive
+
+      - name: Determine version
+        id: version
+        shell: pwsh
+        run: |
+          $ver = ""
+          if ("${{ github.event.inputs.tag_name }}" -ne "") {
+            $ver = "${{ github.event.inputs.tag_name }}"
+          } elseif ($env:GITHUB_REF -like "refs/tags/*") {
+            $ver = $env:GITHUB_REF_NAME
+          } else {
+            $cargo = Get-Content "src/Cargo.toml" -Raw
+            if ($cargo -match '(?m)^version\s*=\s*"([^"]+)"') {
+              $ver = "v" + $matches[1]
+            } else {
+              $ver = "v1.0.1"
+            }
+          }
+          Write-Host "Resolved release tag: $ver"
+          "tag=$ver" >> $env:GITHUB_OUTPUT
 
       - uses: ./.github/actions/setup-cef
         with:
@@ -85,6 +113,10 @@ jobs:
 
       - name: Release
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
+        if: startsWith(github.ref, 'refs/tags/') || github.event_name == 'workflow_dispatch'
         with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Jellyfin Desktop ${{ steps.version.outputs.tag }}
+          draft: false
+          prerelease: false
           files: build/Jellyfin-Desktop-Setup-${{ matrix.arch }}.exe
